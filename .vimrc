@@ -22,6 +22,8 @@ syntax on
 " SEARCHING (INCREMENTAL AND HIGHLIGHT)
 set incsearch
 set hlsearch
+set ignorecase
+set smartcase
 
 " INDENT
 :set autoindent
@@ -72,6 +74,6 @@ nnoremap <leader><space> viw
 " unbind esc - undo later
 :inoremap <esc> <nop>
 
-" This unsets the "last search pattern" register by hitting return
+"This unsets the "last search pattern" register by hitting return
 nnoremap <CR> :noh<CR><CR>
 
