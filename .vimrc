@@ -9,6 +9,9 @@
 " SHARE OSX CLIPBOARD WITH VIM
 set clipboard+=unnamed
 
+" Amount of lines to jump with 'ctrlD' and 'ctrlU'
+set scroll=5
+
 " TURN OFF ARROW IN INSERT MODE
 inoremap <left> <nop>
 inoremap <right> <nop>
