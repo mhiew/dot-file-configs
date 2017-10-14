@@ -1,12 +1,37 @@
+" GENERAL
 :set wrap
 :set linebreak
 :set number numberwidth=4
 
-" top menu bar tabbing through commands
+" TOP MENU BAR TABBING THROUGH COMMANDS
 :set wildmenu
 
-" share osx clipboard with vim
+" SHARE OSX CLIPBOARD WITH VIM
 set clipboard+=unnamed
 
-" turn off arrow in insert mode
+" TURN OFF ARROW IN INSERT MODE
+inoremap <left> <nop>
+inoremap <right> <nop>
+inoremap <up> <nop>
+inoremap <down> <nop>
 
+" MAP LEADER
+:let mapleader = ","
+:let maplocalleader = "\\"
+
+" CUSTOM MAPPING
+
+" space will visually highlight a word
+nnoremap <leader><space> viw
+
+" opens .vimrc in vertical split mode
+:nnoremap <leader>ev :vsplit $MYVIMRC<cr>
+
+" reloads .virmc
+:nnoremap <leader>sv :source $MYVIMRC<cr>
+
+" rebinds esc
+:inoremap jk <esc>
+
+" unbind esc - undo later
+:inoremap <esc> <nop>
