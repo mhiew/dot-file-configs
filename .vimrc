@@ -1,16 +1,30 @@
 " GENERAL
 :set wrap
 :set linebreak
-:set number numberwidth=4
+:set number relativenumber numberwidth=4
+
+"toggle between number and relative number in insert mode
+ :augroup numbertoggle
+ :  autocmd!
+ :  autocmd BufEnter,FocusGained,InsertLeave * set relativenumber
+ :  autocmd BufLeave,FocusLost,InsertEnter   * set norelativenumber
+ :augroup END
 
 " TOP MENU BAR TABBING THROUGH COMMANDS
 :set wildmenu
+
+" INDENT
+:set autoindent
+:set smartindent
 
 " SHARE OSX CLIPBOARD WITH VIM
 set clipboard+=unnamed
 
 " Amount of lines to jump with 'ctrlD' and 'ctrlU'
 set scroll=5
+
+" Visual Bell
+set visualbell
 
 " TURN OFF ARROW IN INSERT MODE
 inoremap <left> <nop>
