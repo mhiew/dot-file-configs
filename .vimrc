@@ -13,9 +13,22 @@
 " TOP MENU BAR TABBING THROUGH COMMANDS
 :set wildmenu
 
+" FILE TYPES
+filetype on
+filetype plugin on
+filetype indent on
+syntax on
+
+" SEARCHING (INCREMENTAL AND HIGHLIGHT)
+set incsearch
+set hlsearch
+
 " INDENT
 :set autoindent
 :set smartindent
+
+" STATUS
+:set laststatus=2
 
 " SHARE OSX CLIPBOARD WITH VIM
 set clipboard+=unnamed
@@ -58,3 +71,7 @@ nnoremap <leader><space> viw
 
 " unbind esc - undo later
 :inoremap <esc> <nop>
+
+" This unsets the "last search pattern" register by hitting return
+nnoremap <CR> :noh<CR><CR>
+
