@@ -8,6 +8,9 @@ alias gandroid="cd /Users/minhiew/Developer/greengage-mobile-android"
 export CLICOLOR=1
 export LSCOLORS=gxBxhxDxfxhxhxhxhxcxcx
 
+#remove name from prompt
+export PS1="\W \$"
+
 #rbenv
 eval "$(rbenv init -)"
 
