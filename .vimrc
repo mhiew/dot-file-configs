@@ -15,6 +15,12 @@ inoremap <right> <nop>
 inoremap <up> <nop>
 inoremap <down> <nop>
 
+" TURN OFF ARROW IN NORMAL MODE
+nnoremap <left> <nop>
+nnoremap <right> <nop>
+nnoremap <up> <nop>
+nnoremap <down> <nop>
+
 " MAP LEADER
 :let mapleader = ","
 :let maplocalleader = "\\"
