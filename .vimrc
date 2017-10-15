@@ -97,6 +97,9 @@ vnoremap L $
 noremap ; :
 vnoremap ; :
 
+" remap U to <C-r> for easier redo
+nnoremap U <C-r>
+
 " v will visually highlight a word
 " nnoremap <leader>v viw
 
