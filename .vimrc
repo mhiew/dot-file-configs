@@ -68,12 +68,12 @@ nnoremap <leader><space> viw
 " reloads .virmc
 :nnoremap <leader>sv :source $MYVIMRC<cr>
 
-" rebinds esc
-:inoremap jk <esc>
+" rebinds esc (using <c-[> instead for ideavim compatibility)
+:inoremap jk <c-[>
 
 " unbind esc - undo later
 :inoremap <esc> <nop>
 
 "This unsets the "last search pattern" register by hitting return
-nnoremap <CR> :noh<CR>
+nnoremap <leader><space> :noh<CR>
 
