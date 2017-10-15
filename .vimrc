@@ -1,7 +1,14 @@
 " GENERAL
+:set encoding=utf-8
+:set modelines=0
 :set wrap
 :set linebreak
 :set number relativenumber numberwidth=4
+:set showmode
+:set showcmd
+:set backspace=indent,eol,start
+:set ttyfast
+:set ruler
 
 "toggle between number and relative number in insert mode
  :augroup numbertoggle
@@ -12,6 +19,7 @@
 
 " TOP MENU BAR TABBING THROUGH COMMANDS
 :set wildmenu
+:set wildmode=list:longest
 
 " FILE TYPES
 filetype on
@@ -41,6 +49,12 @@ set scroll=5
 " Visual Bell
 set visualbell
 
+" Tabs
+set tabstop=4
+set shiftwidth=4
+set softtabstop=4
+set expandtab
+
 " TURN OFF ARROW IN INSERT MODE
 inoremap <left> <nop>
 inoremap <right> <nop>
@@ -59,8 +73,15 @@ nnoremap <down> <nop>
 
 " CUSTOM MAPPING
 
-" space will visually highlight a word
-nnoremap <leader><space> viw
+" movement by columns
+:nnoremap j gj
+:nnoremap k gk
+
+" make ; function as : to write commands (disabled for now)
+" nnoremap ; :
+
+" v will visually highlight a word
+" nnoremap <leader>v viw
 
 " opens .vimrc in vertical split mode
 :nnoremap <leader>ev :vsplit $MYVIMRC<cr>
