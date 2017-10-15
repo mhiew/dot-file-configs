@@ -75,5 +75,5 @@ nnoremap <leader><space> viw
 :inoremap <esc> <nop>
 
 "This unsets the "last search pattern" register by hitting return
-nnoremap <CR> :noh<CR><CR>
+nnoremap <CR> :noh<CR>
 
