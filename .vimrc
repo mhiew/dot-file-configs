@@ -27,6 +27,9 @@ filetype plugin on
 filetype indent on
 syntax on
 
+" turn off auto comments
+:set formatoptions-=cro
+
 " SEARCHING (INCREMENTAL AND HIGHLIGHT)
 set incsearch
 set hlsearch
@@ -46,8 +49,10 @@ set clipboard+=unnamed
 " Amount of lines to jump with 'ctrlD' and 'ctrlU'
 set scroll=5
 
-" Visual Bell
-set visualbell
+" Sounds 
+set noerrorbells
+set novisualbell
+set t_vb=
 
 " Tabs
 set tabstop=4
@@ -77,8 +82,20 @@ nnoremap <down> <nop>
 :nnoremap j gj
 :nnoremap k gk
 
-" make ; function as : to write commands (disabled for now)
-" nnoremap ; :
+" Just to beginning and end of lines easier. 
+noremap H ^
+noremap L $
+noremap <c-H> ^
+noremap <c-L> $
+
+vnoremap H ^
+vnoremap <c-H> ^
+vnoremap <c-L> $
+vnoremap L $
+
+" make ; function as : to write commands (
+noremap ; :
+vnoremap ; :
 
 " v will visually highlight a word
 " nnoremap <leader>v viw
@@ -91,6 +108,9 @@ nnoremap <down> <nop>
 
 " rebinds esc (using <c-[> instead for ideavim compatibility)
 :inoremap jk <c-[>
+:inoremap jK <c-[>
+:inoremap JK <c-[>
+:inoremap Jk <c-[>
 
 " unbind esc - undo later
 :inoremap <esc> <nop>
@@ -98,3 +118,18 @@ nnoremap <down> <nop>
 "This unsets the "last search pattern" register by hitting return
 nnoremap <leader><space> :noh<CR>
 
+" Removes doc lookup mapping because it's easy to fat finger and never useful.
+nnoremap K k
+vnoremap K k
+
+" Scroll larger amounts with c-j / c-k
+nnoremap <c-j> 15gjzz
+nnoremap <c-k> 15gkzz
+vnoremap <c-j> 15gjzz
+vnoremap <c-k> 15gkzz
+
+" Swap implementations of ` and ' jump to markers
+" By default, ' jumps to the marked line, ` jumps to the marked line and
+" column, so swap them
+nnoremap ' `
+nnoremap ` 
