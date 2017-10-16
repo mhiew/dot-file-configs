@@ -1,9 +1,11 @@
 " IDEAVIM CONFIGS
-set showmode
 
 " SOURCE FROM .VIMRC
 source ~/.vimrc
 
 " Reload .ideavimrc
-" nnoremap <leader>sv :source ~/.ideavimrc<CR>
+nnoremap <leader>sv :source ~/.ideavimrc<CR>
+
+" Surround extension
+set surround
 

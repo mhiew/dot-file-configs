@@ -1,8 +1,0 @@
-" IDEAVIM CONFIGS
-
-" SOURCE FROM .VIMRC
-source ~/.vimrc
-
-" Reload .ideavimrc
-nnoremap <leader>sv :source ~/.ideavimrc<CR>
-

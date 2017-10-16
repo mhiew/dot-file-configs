@@ -1,3 +1,33 @@
+" PLUGINS
+
+" ======================================== 
+" autoload PLUG plugin manager
+if empty(glob('~/.vim/autoload/plug.vim'))
+  silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+endif
+
+" Specify a directory for plugins
+" - For Neovim: ~/.local/share/nvim/plugged
+" - Avoid using standard Vim directory names like 'plugin'
+call plug#begin('~/.vim/plugged')
+  
+" make sure to use single quotes
+
+" surround plugin to match ideavim
+Plug 'https://github.com/tpope/vim-surround'
+
+" dracula color
+Plug 'dracula/vim'
+
+" Initialize plugin system
+call plug#end()
+" ========================================
+
+" COLOR
+color dracula
+
 " GENERAL
 :set encoding=utf-8
 :set modelines=0
@@ -78,9 +108,9 @@ nnoremap <down> <nop>
 
 " CUSTOM MAPPING
 
-" movement by columns
-:nnoremap j gj
-:nnoremap k gk
+" movement by columns (allow normal [count]motions for wrapped lines)
+nnoremap <expr> j v:count ? 'j' : 'gj'
+nnoremap <expr> k v:count ? 'k' : 'gk'
 
 " Just to beginning and end of lines easier. 
 noremap H ^
@@ -125,7 +155,7 @@ nnoremap <leader><space> :noh<CR>
 nnoremap K k
 vnoremap K k
 
-" Scroll larger amounts with c-j / c-k
+" scroll larger amounts with c-j / c-k
 nnoremap <c-j> 15gjzz
 nnoremap <c-k> 15gkzz
 vnoremap <c-j> 15gjzz
@@ -135,4 +165,4 @@ vnoremap <c-k> 15gkzz
 " By default, ' jumps to the marked line, ` jumps to the marked line and
 " column, so swap them
 nnoremap ' `
-nnoremap ` 
+nnoremap ` '
