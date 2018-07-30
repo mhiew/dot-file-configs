@@ -166,3 +166,6 @@ vnoremap <c-k> 15gkzz
 " column, so swap them
 nnoremap ' `
 nnoremap ` '
+
+" Set syntax highlighting for fastlane files
+au BufNewFile,BufRead Fastfile set filetype=ruby
