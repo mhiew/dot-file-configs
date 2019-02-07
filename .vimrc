@@ -169,3 +169,8 @@ nnoremap ` '
 
 " Set syntax highlighting for fastlane files
 au BufNewFile,BufRead Fastfile set filetype=ruby
+
+" Add shortcut for clipboard registers (ubuntu)
+noremap <leader>p "*p
+noremap <leader>y "+y
+noremap <leader>d "+d
