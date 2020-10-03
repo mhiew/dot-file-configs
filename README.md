@@ -1,2 +1,2 @@
-# Settings for ITERM2 and bash_profile
-This contains ITERM2 preference settings as well as .bash_profile settings
+# Configurations for Daily Tools
+A place to drop some tools preferences and configurations for ease of sharing between devices.
