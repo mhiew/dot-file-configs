@@ -1,31 +1,23 @@
 <code_scheme name="Project" version="173">
-  <option name="CLASS_COUNT_TO_USE_IMPORT_ON_DEMAND" value="99" />
-  <option name="NAMES_COUNT_TO_USE_IMPORT_ON_DEMAND" value="99" />
-  <option name="PACKAGES_TO_USE_IMPORT_ON_DEMAND">
-    <value />
+  <option name="RIGHT_MARGIN" value="180" />
+  <option name="DO_NOT_FORMAT">
+    <list>
+      <fileSet type="namedScope" name="Gradle" pattern="file:*.gradle" />
+      <fileSet type="namedScope" name="Lint" pattern="file:*lint.xml" />
+      <fileSet type="namedScope" name="Values" pattern="file:*src/main/res/values*/*" />
+      <fileSet type="namedScope" name="Drawable" pattern="file:*src/main/res/drawable*/*" />
+      <fileSet type="namedScope" name="MipMap" pattern="file:*src/main/res/mipmap*/*" />
+      <fileSet type="namedScope" name="FileProviderPaths" pattern="file:*file_provider_paths.xml" />
+      <fileSet type="namedScope" name="NetworkSecurityConfig" pattern="file:*network_security_config.xml" />
+    </list>
   </option>
-  <option name="IMPORT_LAYOUT_TABLE">
-    <value>
-      <package name="android" withSubpackages="true" static="false" />
-      <emptyLine />
-      <package name="com" withSubpackages="true" static="false" />
-      <emptyLine />
-      <package name="junit" withSubpackages="true" static="false" />
-      <emptyLine />
-      <package name="net" withSubpackages="true" static="false" />
-      <emptyLine />
-      <package name="org" withSubpackages="true" static="false" />
-      <emptyLine />
-      <package name="java" withSubpackages="true" static="false" />
-      <emptyLine />
-      <package name="javax" withSubpackages="true" static="false" />
-      <emptyLine />
-      <package name="" withSubpackages="true" static="false" />
-      <emptyLine />
-      <package name="" withSubpackages="true" static="true" />
-      <emptyLine />
-    </value>
-  </option>
+  <AndroidXmlCodeStyleSettings>
+    <option name="LAYOUT_SETTINGS">
+      <value>
+        <option name="INSERT_LINE_BREAK_BEFORE_NAMESPACE_DECLARATION" value="true" />
+      </value>
+    </option>
+  </AndroidXmlCodeStyleSettings>
   <JavaCodeStyleSettings>
     <option name="IMPORT_LAYOUT_TABLE">
       <value>
@@ -50,8 +42,29 @@
       </value>
     </option>
   </JavaCodeStyleSettings>
+  <JetCodeStyleSettings>
+    <option name="PACKAGES_TO_USE_STAR_IMPORTS">
+      <value>
+        <package name="java.util" alias="false" withSubpackages="false" />
+        <package name="kotlinx.android.synthetic" alias="false" withSubpackages="true" />
+        <package name="io.ktor" alias="false" withSubpackages="true" />
+      </value>
+    </option>
+    <option name="PACKAGES_IMPORT_LAYOUT">
+      <value>
+        <package name="" alias="false" withSubpackages="true" />
+        <package name="java" alias="false" withSubpackages="true" />
+        <package name="javax" alias="false" withSubpackages="true" />
+        <package name="kotlin" alias="false" withSubpackages="true" />
+        <package name="" alias="true" withSubpackages="true" />
+      </value>
+    </option>
+  </JetCodeStyleSettings>
   <XML>
+    <option name="XML_ATTRIBUTE_WRAP" value="2" />
+    <option name="XML_KEEP_BLANK_LINES" value="0" />
     <option name="XML_ALIGN_ATTRIBUTES" value="true" />
+    <option name="XML_SPACE_INSIDE_EMPTY_TAG" value="false" />
   </XML>
   <codeStyleSettings language="JAVA">
     <option name="RIGHT_MARGIN" value="150" />
@@ -66,7 +79,7 @@
     <option name="WRAP_LONG_LINES" value="true" />
   </codeStyleSettings>
   <codeStyleSettings language="XML">
-    <option name="FORCE_REARRANGE_MODE" value="2" />
+    <option name="FORCE_REARRANGE_MODE" value="1" />
     <indentOptions>
       <option name="CONTINUATION_INDENT_SIZE" value="4" />
     </indentOptions>
@@ -92,6 +105,7 @@
                 <XML_NAMESPACE>^$</XML_NAMESPACE>
               </AND>
             </match>
+            <order>BY_NAME</order>
           </rule>
         </section>
         <section>
@@ -101,28 +115,6 @@
                 <NAME>.*:id</NAME>
                 <XML_ATTRIBUTE />
                 <XML_NAMESPACE>http://schemas.android.com/apk/res/android</XML_NAMESPACE>
-              </AND>
-            </match>
-          </rule>
-        </section>
-        <section>
-          <rule>
-            <match>
-              <AND>
-                <NAME>.*:name</NAME>
-                <XML_ATTRIBUTE />
-                <XML_NAMESPACE>http://schemas.android.com/apk/res/android</XML_NAMESPACE>
-              </AND>
-            </match>
-          </rule>
-        </section>
-        <section>
-          <rule>
-            <match>
-              <AND>
-                <NAME>name</NAME>
-                <XML_ATTRIBUTE />
-                <XML_NAMESPACE>^$</XML_NAMESPACE>
               </AND>
             </match>
           </rule>
@@ -142,11 +134,485 @@
           <rule>
             <match>
               <AND>
-                <NAME>.*</NAME>
+                <NAME>.*:layout_width</NAME>
                 <XML_ATTRIBUTE />
-                <XML_NAMESPACE>^$</XML_NAMESPACE>
+                <XML_NAMESPACE>http://schemas.android.com/apk/res/android</XML_NAMESPACE>
               </AND>
             </match>
+          </rule>
+        </section>
+        <section>
+          <rule>
+            <match>
+              <AND>
+                <NAME>.*:layout_height</NAME>
+                <XML_ATTRIBUTE />
+                <XML_NAMESPACE>http://schemas.android.com/apk/res/android</XML_NAMESPACE>
+              </AND>
+            </match>
+          </rule>
+        </section>
+        <section>
+          <rule>
+            <match>
+              <AND>
+                <NAME>.*:orientation</NAME>
+                <XML_ATTRIBUTE />
+                <XML_NAMESPACE>http://schemas.android.com/apk/res/android</XML_NAMESPACE>
+              </AND>
+            </match>
+          </rule>
+        </section>
+        <section>
+          <rule>
+            <match>
+              <AND>
+                <NAME>.*:layout_width</NAME>
+                <XML_ATTRIBUTE />
+                <XML_NAMESPACE>http://schemas.android.com/tools</XML_NAMESPACE>
+              </AND>
+            </match>
+          </rule>
+        </section>
+        <section>
+          <rule>
+            <match>
+              <AND>
+                <NAME>.*:layout_height</NAME>
+                <XML_ATTRIBUTE />
+                <XML_NAMESPACE>http://schemas.android.com/tools</XML_NAMESPACE>
+              </AND>
+            </match>
+          </rule>
+        </section>
+        <section>
+          <rule>
+            <match>
+              <AND>
+                <NAME>.*:layout_weight</NAME>
+                <XML_ATTRIBUTE />
+                <XML_NAMESPACE>http://schemas.android.com/apk/res/android</XML_NAMESPACE>
+              </AND>
+            </match>
+          </rule>
+        </section>
+        <section>
+          <rule>
+            <match>
+              <AND>
+                <NAME>.*:layout_margin</NAME>
+                <XML_ATTRIBUTE />
+                <XML_NAMESPACE>http://schemas.android.com/apk/res/android</XML_NAMESPACE>
+              </AND>
+            </match>
+          </rule>
+        </section>
+        <section>
+          <rule>
+            <match>
+              <AND>
+                <NAME>.*:layout_constraintBaseline.*</NAME>
+                <XML_ATTRIBUTE />
+                <XML_NAMESPACE>http://schemas.android.com/apk/res-auto</XML_NAMESPACE>
+              </AND>
+            </match>
+          </rule>
+        </section>
+        <section>
+          <rule>
+            <match>
+              <AND>
+                <NAME>.*:layout_marginTop</NAME>
+                <XML_ATTRIBUTE />
+                <XML_NAMESPACE>http://schemas.android.com/apk/res/android</XML_NAMESPACE>
+              </AND>
+            </match>
+          </rule>
+        </section>
+        <section>
+          <rule>
+            <match>
+              <AND>
+                <NAME>.*:layout_marginBottom</NAME>
+                <XML_ATTRIBUTE />
+                <XML_NAMESPACE>http://schemas.android.com/apk/res/android</XML_NAMESPACE>
+              </AND>
+            </match>
+          </rule>
+        </section>
+        <section>
+          <rule>
+            <match>
+              <AND>
+                <NAME>.*:layout_marginStart</NAME>
+                <XML_ATTRIBUTE />
+                <XML_NAMESPACE>http://schemas.android.com/apk/res/android</XML_NAMESPACE>
+              </AND>
+            </match>
+          </rule>
+        </section>
+        <section>
+          <rule>
+            <match>
+              <AND>
+                <NAME>.*:layout_marginEnd</NAME>
+                <XML_ATTRIBUTE />
+                <XML_NAMESPACE>http://schemas.android.com/apk/res/android</XML_NAMESPACE>
+              </AND>
+            </match>
+          </rule>
+        </section>
+        <section>
+          <rule>
+            <match>
+              <AND>
+                <NAME>.*:layout_marginLeft</NAME>
+                <XML_ATTRIBUTE />
+                <XML_NAMESPACE>http://schemas.android.com/apk/res/android</XML_NAMESPACE>
+              </AND>
+            </match>
+          </rule>
+        </section>
+        <section>
+          <rule>
+            <match>
+              <AND>
+                <NAME>.*:layout_marginRight</NAME>
+                <XML_ATTRIBUTE />
+                <XML_NAMESPACE>http://schemas.android.com/apk/res/android</XML_NAMESPACE>
+              </AND>
+            </match>
+          </rule>
+        </section>
+        <section>
+          <rule>
+            <match>
+              <AND>
+                <NAME>.*:layout_marginTop</NAME>
+                <XML_ATTRIBUTE />
+                <XML_NAMESPACE>http://schemas.android.com/tools</XML_NAMESPACE>
+              </AND>
+            </match>
+          </rule>
+        </section>
+        <section>
+          <rule>
+            <match>
+              <AND>
+                <NAME>.*:layout_marginBottom</NAME>
+                <XML_ATTRIBUTE />
+                <XML_NAMESPACE>http://schemas.android.com/tools</XML_NAMESPACE>
+              </AND>
+            </match>
+          </rule>
+        </section>
+        <section>
+          <rule>
+            <match>
+              <AND>
+                <NAME>.*:layout_marginStart</NAME>
+                <XML_ATTRIBUTE />
+                <XML_NAMESPACE>http://schemas.android.com/tools</XML_NAMESPACE>
+              </AND>
+            </match>
+          </rule>
+        </section>
+        <section>
+          <rule>
+            <match>
+              <AND>
+                <NAME>.*:layout_marginEnd</NAME>
+                <XML_ATTRIBUTE />
+                <XML_NAMESPACE>http://schemas.android.com/tools</XML_NAMESPACE>
+              </AND>
+            </match>
+          </rule>
+        </section>
+        <section>
+          <rule>
+            <match>
+              <AND>
+                <NAME>.*:layout_marginLeft</NAME>
+                <XML_ATTRIBUTE />
+                <XML_NAMESPACE>http://schemas.android.com/tools</XML_NAMESPACE>
+              </AND>
+            </match>
+          </rule>
+        </section>
+        <section>
+          <rule>
+            <match>
+              <AND>
+                <NAME>.*:layout_marginRight</NAME>
+                <XML_ATTRIBUTE />
+                <XML_NAMESPACE>http://schemas.android.com/tools</XML_NAMESPACE>
+              </AND>
+            </match>
+          </rule>
+        </section>
+        <section>
+          <rule>
+            <match>
+              <AND>
+                <NAME>.*:padding</NAME>
+                <XML_ATTRIBUTE />
+                <XML_NAMESPACE>http://schemas.android.com/apk/res/android</XML_NAMESPACE>
+              </AND>
+            </match>
+          </rule>
+        </section>
+        <section>
+          <rule>
+            <match>
+              <AND>
+                <NAME>.*:paddingTop</NAME>
+                <XML_ATTRIBUTE />
+                <XML_NAMESPACE>http://schemas.android.com/apk/res/android</XML_NAMESPACE>
+              </AND>
+            </match>
+          </rule>
+        </section>
+        <section>
+          <rule>
+            <match>
+              <AND>
+                <NAME>.*:paddingBottom</NAME>
+                <XML_ATTRIBUTE />
+                <XML_NAMESPACE>http://schemas.android.com/apk/res/android</XML_NAMESPACE>
+              </AND>
+            </match>
+          </rule>
+        </section>
+        <section>
+          <rule>
+            <match>
+              <AND>
+                <NAME>.*:paddingStart</NAME>
+                <XML_ATTRIBUTE />
+                <XML_NAMESPACE>http://schemas.android.com/apk/res/android</XML_NAMESPACE>
+              </AND>
+            </match>
+          </rule>
+        </section>
+        <section>
+          <rule>
+            <match>
+              <AND>
+                <NAME>.*:paddingEnd</NAME>
+                <XML_ATTRIBUTE />
+                <XML_NAMESPACE>http://schemas.android.com/apk/res/android</XML_NAMESPACE>
+              </AND>
+            </match>
+          </rule>
+        </section>
+        <section>
+          <rule>
+            <match>
+              <AND>
+                <NAME>.*:paddingLeft</NAME>
+                <XML_ATTRIBUTE />
+                <XML_NAMESPACE>http://schemas.android.com/apk/res/android</XML_NAMESPACE>
+              </AND>
+            </match>
+          </rule>
+        </section>
+        <section>
+          <rule>
+            <match>
+              <AND>
+                <NAME>.*:paddingRight</NAME>
+                <XML_ATTRIBUTE />
+                <XML_NAMESPACE>http://schemas.android.com/apk/res/android</XML_NAMESPACE>
+              </AND>
+            </match>
+          </rule>
+        </section>
+        <section>
+          <rule>
+            <match>
+              <AND>
+                <NAME>.*:padding</NAME>
+                <XML_ATTRIBUTE />
+                <XML_NAMESPACE>http://schemas.android.com/tools</XML_NAMESPACE>
+              </AND>
+            </match>
+          </rule>
+        </section>
+        <section>
+          <rule>
+            <match>
+              <AND>
+                <NAME>.*:paddingTop</NAME>
+                <XML_ATTRIBUTE />
+                <XML_NAMESPACE>http://schemas.android.com/tools</XML_NAMESPACE>
+              </AND>
+            </match>
+          </rule>
+        </section>
+        <section>
+          <rule>
+            <match>
+              <AND>
+                <NAME>.*:paddingBottom</NAME>
+                <XML_ATTRIBUTE />
+                <XML_NAMESPACE>http://schemas.android.com/tools</XML_NAMESPACE>
+              </AND>
+            </match>
+          </rule>
+        </section>
+        <section>
+          <rule>
+            <match>
+              <AND>
+                <NAME>.*:paddingStart</NAME>
+                <XML_ATTRIBUTE />
+                <XML_NAMESPACE>http://schemas.android.com/tools</XML_NAMESPACE>
+              </AND>
+            </match>
+          </rule>
+        </section>
+        <section>
+          <rule>
+            <match>
+              <AND>
+                <NAME>.*:paddingEnd</NAME>
+                <XML_ATTRIBUTE />
+                <XML_NAMESPACE>http://schemas.android.com/tools</XML_NAMESPACE>
+              </AND>
+            </match>
+          </rule>
+        </section>
+        <section>
+          <rule>
+            <match>
+              <AND>
+                <NAME>.*:paddingLeft</NAME>
+                <XML_ATTRIBUTE />
+                <XML_NAMESPACE>http://schemas.android.com/tools</XML_NAMESPACE>
+              </AND>
+            </match>
+          </rule>
+        </section>
+        <section>
+          <rule>
+            <match>
+              <AND>
+                <NAME>.*:paddingRight</NAME>
+                <XML_ATTRIBUTE />
+                <XML_NAMESPACE>http://schemas.android.com/tools</XML_NAMESPACE>
+              </AND>
+            </match>
+          </rule>
+        </section>
+        <section>
+          <rule>
+            <match>
+              <AND>
+                <NAME>.*:layout_constraintTop.*</NAME>
+                <XML_ATTRIBUTE />
+                <XML_NAMESPACE>http://schemas.android.com/apk/res-auto</XML_NAMESPACE>
+              </AND>
+            </match>
+          </rule>
+        </section>
+        <section>
+          <rule>
+            <match>
+              <AND>
+                <NAME>.*:layout_constraintBottom.*</NAME>
+                <XML_ATTRIBUTE />
+                <XML_NAMESPACE>http://schemas.android.com/apk/res-auto</XML_NAMESPACE>
+              </AND>
+            </match>
+          </rule>
+        </section>
+        <section>
+          <rule>
+            <match>
+              <AND>
+                <NAME>.*:layout_constraintStart.*</NAME>
+                <XML_ATTRIBUTE />
+                <XML_NAMESPACE>http://schemas.android.com/apk/res-auto</XML_NAMESPACE>
+              </AND>
+            </match>
+          </rule>
+        </section>
+        <section>
+          <rule>
+            <match>
+              <AND>
+                <NAME>.*:layout_constraintEnd.*</NAME>
+                <XML_ATTRIBUTE />
+                <XML_NAMESPACE>http://schemas.android.com/apk/res-auto</XML_NAMESPACE>
+              </AND>
+            </match>
+          </rule>
+        </section>
+        <section>
+          <rule>
+            <match>
+              <AND>
+                <NAME>.*layout_constraintLeft.*</NAME>
+                <XML_ATTRIBUTE />
+                <XML_NAMESPACE>http://schemas.android.com/apk/res-auto</XML_NAMESPACE>
+              </AND>
+            </match>
+          </rule>
+        </section>
+        <section>
+          <rule>
+            <match>
+              <AND>
+                <NAME>.*:layout_constraintRight.*</NAME>
+                <XML_ATTRIBUTE />
+                <XML_NAMESPACE>http://schemas.android.com/apk/res-auto</XML_NAMESPACE>
+              </AND>
+            </match>
+          </rule>
+        </section>
+        <section>
+          <rule>
+            <match>
+              <AND>
+                <NAME>.*:layout_constraint.*chain.*</NAME>
+                <XML_ATTRIBUTE />
+                <XML_NAMESPACE>http://schemas.android.com/apk/res-auto</XML_NAMESPACE>
+              </AND>
+            </match>
+          </rule>
+        </section>
+        <section>
+          <rule>
+            <match>
+              <AND>
+                <NAME>.*:layout_constraintVertical_bias</NAME>
+                <XML_ATTRIBUTE />
+                <XML_NAMESPACE>http://schemas.android.com/apk/res-auto</XML_NAMESPACE>
+              </AND>
+            </match>
+          </rule>
+        </section>
+        <section>
+          <rule>
+            <match>
+              <AND>
+                <NAME>.*:layout_constraintHorizontal_bias</NAME>
+                <XML_ATTRIBUTE />
+                <XML_NAMESPACE>http://schemas.android.com/apk/res-autohttp://schemas.android.com/apk/res-auto</XML_NAMESPACE>
+              </AND>
+            </match>
+          </rule>
+        </section>
+        <section>
+          <rule>
+            <match>
+              <AND>
+                <NAME>.*:layout_constraint.*</NAME>
+                <XML_ATTRIBUTE />
+                <XML_NAMESPACE>http://schemas.android.com/apk/res-auto</XML_NAMESPACE>
+              </AND>
+            </match>
+            <order>BY_NAME</order>
           </rule>
         </section>
         <section>
@@ -166,17 +632,28 @@
             <match>
               <AND>
                 <NAME>.*</NAME>
+                <XML_NAMESPACE>http://schemas.android.com/tools</XML_NAMESPACE>
+              </AND>
+            </match>
+            <order>BY_NAME</order>
+          </rule>
+        </section>
+        <section>
+          <rule>
+            <match>
+              <AND>
+                <NAME>.*</NAME>
                 <XML_ATTRIBUTE />
                 <XML_NAMESPACE>.*</XML_NAMESPACE>
               </AND>
             </match>
+            <order>BY_NAME</order>
           </rule>
         </section>
       </rules>
     </arrangement>
   </codeStyleSettings>
   <codeStyleSettings language="kotlin">
-    <option name="RIGHT_MARGIN" value="150" />
     <option name="KEEP_FIRST_COLUMN_COMMENT" value="false" />
     <option name="ELSE_ON_NEW_LINE" value="true" />
     <option name="CATCH_ON_NEW_LINE" value="true" />
