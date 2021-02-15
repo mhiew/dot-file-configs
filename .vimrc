@@ -21,6 +21,9 @@ Plug 'https://github.com/tpope/vim-surround'
 " dracula color
 Plug 'dracula/vim'
 
+" easy motion
+Plug 'easymotion/vim-easymotion'
+
 " Initialize plugin system
 call plug#end()
 " ========================================
@@ -28,6 +31,7 @@ call plug#end()
 " COLOR
 color dracula
 
+" ========================================
 " GENERAL
 :set encoding=utf-8
 :set modelines=0
@@ -103,7 +107,8 @@ nnoremap <up> <nop>
 nnoremap <down> <nop>
 
 " MAP LEADER
-:let mapleader = ","
+noremap <Space> <Nop>
+:let mapleader = "\<Space>"
 :let maplocalleader = "\\"
 
 " CUSTOM MAPPING
@@ -145,11 +150,8 @@ nnoremap U <C-r>
 :inoremap JK <c-[>
 :inoremap Jk <c-[>
 
-" unbind esc - undo later
-:inoremap <esc> <nop>
-
 "This unsets the "last search pattern" register by hitting return
-nnoremap <leader><space> :noh<CR>
+nnoremap <leader>/ :noh<CR>
 
 " Removes doc lookup mapping because it's easy to fat finger and never useful.
 nnoremap K k
@@ -170,7 +172,26 @@ nnoremap ` '
 " Set syntax highlighting for fastlane files
 au BufNewFile,BufRead Fastfile set filetype=ruby
 
-" Add shortcut for clipboard registers (ubuntu)
-noremap <leader>p "*p
-noremap <leader>y "+y
-noremap <leader>d "+d
+" ========================================
+
+" Easy Motion Configs
+let g:EasyMotion_do_mapping = 0 " Disable default mappings
+
+" Turn on case-insensitive feature
+let g:EasyMotion_smartcase = 1
+
+" Jump to anywhere you want with minimal keystrokes, with just one key binding.
+map <leader>f <Plug>(easymotion-bd-f)
+
+" Word motions are quite convenient
+map <leader>w <Plug>(easymotion-bd-w)
+
+" JK motions: Line motions
+map <leader>j <Plug>(easymotion-bd-jk)
+map <leader>k <Plug>(easymotion-bd-jk)
+
+" repeat last easy motion search
+map <leader>. <Plug>(easymotion-repeat)
+
+" used after searching to jump to specific result
+map <leader>n <Plug>(easymotion-bd-n)
