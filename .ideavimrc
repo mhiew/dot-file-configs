@@ -9,6 +9,9 @@ nnoremap <leader>sv :source ~/.ideavimrc<CR>
 " Surround extension
 set surround
 
+" Disable S
+map s <nop>
+
 " Easy Motion
 set easymotion
 
