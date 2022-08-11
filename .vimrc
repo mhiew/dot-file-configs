@@ -114,8 +114,10 @@ noremap <Space> <Nop>
 " CUSTOM MAPPING
 
 " movement by columns (allow normal [count]motions for wrapped lines)
-nnoremap <expr> j v:count ? 'j' : 'gj'
-nnoremap <expr> k v:count ? 'k' : 'gk'
+"nnoremap <expr> j v:count ? 'j' : 'gj'
+"nnoremap <expr> k v:count ? 'k' : 'gk'
+noremap j gj
+noremap k gk
 
 " Just to beginning and end of lines easier. 
 noremap H ^
@@ -145,6 +147,7 @@ nnoremap U <C-r>
 :nnoremap <leader>sv :source $MYVIMRC<cr>
 
 " rebinds esc (using <c-[> instead for ideavim compatibility)
+
 :inoremap jk <c-[>
 :inoremap jK <c-[>
 :inoremap JK <c-[>
