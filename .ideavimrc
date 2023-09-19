@@ -45,3 +45,11 @@ map <leader>n <Plug>(easymotion-bd-n)
 
 " shortcut for SelectProjectInView
 map <leader>b <Action>(SelectInProjectView)
+
+" shortcut go switch focus between splitter
+map <leader>= <Action>(NextSplitter)
+map <leader>- <Action>(PrevSplitter)
+
+" Errors
+nmap <leader>x <Action>(GotoNextError)
+nmap <leader>X <Action>(GotoPreviousError)
