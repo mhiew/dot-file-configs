@@ -1,0 +1,214 @@
+#######################################################
+# load Square specific zshrc; please don't change this bit.
+#######################################################
+ source ~/Development/config_files/square/zshrc
+#######################################################
+
+###########################################
+# Feel free to make your own changes below.
+###########################################
+
+# uncomment to automatically `bundle exec` common ruby commands
+# if [[ -f "$SQUARE_HOME/config_files/square/bundler-exec.sh" ]]; then
+#   source $SQUARE_HOME/config_files/square/bundler-exec.sh
+# fi
+
+# added by min - (taken from zprofile)
+# this is used to switch which homebrew we're using based on our x86 or arm64 terminals
+# we need to use x86 when deploying to a debug board
+#if [ $(arch) = "i386" ]
+#then
+#    eval "$(/usr/local/bin/brew shellenv)"
+
+    # added by min - custom x86 configuration for python and x2b development using a debug board
+    # we only want this to affect our x86 iterm
+#    export PYENV_ROOT=$HOME/.pyenv
+#    export PATH=$PYENV_ROOT/bin:$PATH
+#    eval "$(pyenv init --path)"
+#    eval "$(pyenv init -)"
+
+#else
+#    eval "$(/opt/homebrew/bin/brew shellenv)"
+#fi
+
+
+# opt out of automatic setupIdeModules git hook https://square.slack.com/archives/C02GDC2JP/p1704741274803199
+export DISABLE_SETUPIDEMODULES_HOOK=1
+
+#case insensitive autocomplete
+zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
+
+### zsh changes for history
+# increase history size
+HISTFILE=~/.zsh_history
+HISTSIZE=999999999
+SAVEHIST=$HISTSIZE
+
+# automatically append to history file instead of on shell exit
+setopt INC_APPEND_HISTORY
+export HISTTIMEFORMAT="[%F %T] "
+
+# add timestamps for history
+setopt EXTENDED_HISTORY
+
+# remove duplicates
+setopt HIST_FIND_NO_DUPS
+setopt HIST_IGNORE_ALL_DUPS
+
+# share history between tabs
+setopt SHARE_HISTORY
+
+# automatically show extended options and the last 30 items
+alias history="history -E -30"
+alias allhistory="history -9999999"
+
+###
+# gradlew
+alias gw="./gradlew"
+alias gwp="./gradlew -p" #allows autocompletion
+
+# reloads our shell with latest zshrc changes
+alias mshell="source ~/.zshrc"
+
+# reloads compost mobile
+alias mcompost="cd ~/Development/topsoil; ./compost mobile"
+
+# traversal to our android repo
+alias mretail="cd /Users/mhiew/Development/android-register"
+alias mregister="cd /Users/mhiew/Development/android-register"
+
+# Mirrors the x2 device for screensharing and recording
+alias mmirror="scrcpy --max-size 1560 --show-touches --record file.mp4"
+
+# These commands need to be run within android-register repo
+# initial modules used for grocery team (will likely change in the future as I figure out which modules are used in practice)
+alias msetupbak="./setupIdeModules --minimal :retail:home-applet :retail:features:item-detail :retail:home-applet:internal :features:notification-center :features:notification-center-applet :retail:features:order-fulfillment :cdx:connected-peripheral-monitoring :cdx:scannerscales-ui :features:scales :hairball-features:settings-applet cdx:hardwarehub cdx:messagebar-v2 :common:barcode-scanner:impl-shared :retail:features:age-restriction-items :retail:features:quick-create:impl :reader-sdk-2 :features:tender-payment-legacy :features:tender-payment :apps:t2-retail:app :retail:common:search-components :retail:features:inventory-empty-state :retail:features:inventory-search :common:retail-analytics :common:search"
+
+
+# compiling and installing the x2 retail app for connected adb devices
+alias minstallbak="./gradlew :apps:x2-retail:app:installDebug"
+alias minstallretail="./gradlew :apps:x2-retail:app:installDebug"
+alias minstallspos="./gradlew :apps:x2-spos:app:installDebug"
+alias minstallRelease="./gradlew :apps:x2-retail:app:installRelease -PengBuild=false" #we need -PengBuild to see the installRelease task
+alias mprofile="./gradlew :apps:x2-retail:app:installRelease -Psquare.enableProfiling=true -PengBuild=false"
+alias minstallbran="bran ./gradlew :apps:x2-bran:app:installDebug"
+alias minstallswitcher="./gradlew :apps:squid-statusbar:app:installDebug"
+alias minstallT2="./gradlew :apps:t2-retail:app:installDebug"
+alias mbuildbran="./gradlew :apps:x2-bran:app:assembleDebug"
+
+# DEMO
+alias msetupdemo="./setupIdeModules --minimal :common:data-export :common:data-migration :common:data-archive :retail:home-applet"
+alias minstalldemo="./gradlew :common:data-migration:demo:installDebug"
+alias mbuilddemo="./gradlew :common:data-migration:demo:assembleDebug"
+alias launchdemo="adb shell monkey -p com.squareup.data.migration.demo 1"
+alias stopdemo="adb shell am force-stop com.squareup.data.migration.demo"
+alias launchretail="adb shell monkey -p com.squareup.retail 1"
+
+# SUPERPOS
+alias msetup="./setupIdeModules --minimal :apps:x2-superpos"
+alias minstall="./gradlew :apps:x2-superpos:app:installDebug"
+alias mbuild="./gradlew :apps:x2-superpos:app:assembleDebug"
+
+# SUPERPOS - Change Verticals
+alias mspos="adb shell am broadcast -p com.squareup -a com.squareup.superpos.VERTICAL_SELECTION -e vertical spos"
+alias mretail="adb shell am broadcast -p com.squareup -a com.squareup.superpos.VERTICAL_SELECTION -e vertical retail"
+alias mapos="adb shell am broadcast -p com.squareup -a com.squareup.superpos.VERTICAL_SELECTION -e vertical appointments"
+alias mrest="adb shell am broadcast -p com.squareup -a com.squareup.superpos.VERTICAL_SELECTION -e vertical restaurants"
+alias mfront="adb shell am start -n com.squareup/com.squareup.ui.PaymentActivity"
+alias mfrontretail="adb shell am start -n com.squareup.retail/com.squareup.ui.PaymentActivity"
+
+# toggle touch overlay
+alias mshowtouch="adb shell settings put system show_touches 1"
+alias mhidetouch="adb shell settings put system show_touches 0"
+
+# profiling steps from https://docs.google.com/document/d/19pF8Vqnjdp4VlkCKS_j3hCbJGmn7VjEmLYgeC_hemO4/edit
+alias maot="adb shell cmd package compile -f -m speed com.squareup.retail; adb shell am force-stop com.squareup.retail;"
+alias maotcheck="adb shell dumpsys package dexopt | grep -A 2 com.squareup\]"
+
+# record trace
+alias mtrace="./record_android_trace -o trace_file.perfetto-trace -b 500mb -a com.squareup.retail sched freq idle am wm gfx view binder_driver hal dalvik input res"
+
+# just compile the app without installing
+alias mbuildbak="./gradlew :apps:x2-retail:app:assembleDebug"
+
+# launc the app from cli for any connected emulators
+alias mrun="adb shell am start -n com.squareup.retail/com.squareup.ui.PaymentActivity"
+
+# ktlints only changes I've made using the gradlew-changed.sh script
+alias mlint="./scripts/gradlew-changed.sh ktlint"
+
+# autoformat only files I've changed 
+alias mformat="./scripts/gradlew-changed.sh ktlintformat"
+
+# only test files I've changed
+alias mtest="./scripts/gradlew-changed.sh test"
+
+alias mcheck="./scripts/gradlew-changed.sh ktlintformat test ktlint checkstyle"
+alias mScreenshot="./scripts/gradlew-changed.sh verifyPaparazziDebug -Psquare.runPaparazzi=true"
+alias mdependencies="./gradlew buildHealth --full-stacktrace --continue -PengBuild\=true -Pdependency.analysis.print.build.health\=true -Pdependency.analysis.project.includes\=\^\(\(\?\!:common:\)\).\*\$"
+
+# test helpers
+alias mtestall="./gradlew :retail:home-applet:internal:testDebugUnitTest"
+alias muitest="./gradlew :apps:x2-retail:app:uiTest --both"
+
+# free memory
+alias mfreemem="/Users/mhiew/Development/android-register/scripts/release-memory.sh"
+# stop gradle
+alias mgradlestop="./gradlew --stop"
+
+# open debug drawer
+alias mdebugdrawer="echo \"make sure you ran adb root\"; adb shell am broadcast -a \"com.squareup\" -a \"com.squareup.development.drawer.TOGGLE_DRAWER\""
+
+# launch emulators
+#
+#alias hodor="$ANDROID_HOME/emulator/emulator -avd Hodor_API_29"
+#alias bran="$ANDROID_HOME/emulator/emulator -avd Bran_API_29"
+#alias x2="hodor &; bran &;"
+
+# generates feature flags from protos
+alias mfeatureflaggen="gwp common/services-data generateProtos"
+
+# load the aliases in config_files files (optional)
+source ~/Development/config_files/square/aliases
+
+[[ -f "$HOME/.aliases" ]] && source "$HOME/.aliases"
+[[ -f "$HOME/.localaliases" ]] && source "$HOME/.localaliases"
+
+# Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
+# Added by sa-tools
+function bran() { local VAR=$(adb devices -l | grep bran | cut -d " " -f 1 | sed '1q;d') ; ANDROID_SERIAL=$VAR "$@" ; }
+function hodor() { local VAR=$(adb devices -l | grep hodor | cut -d " " -f 1 | sed '1q;d') ; ANDROID_SERIAL=$VAR "$@" ; }
+
+# Added by min - adb
+export ANDROID_HOME=/Users/mhiew/Library/Android/sdk
+export PATH=$ANDROID_HOME/platform-tools:$PATH
+export PATH=$ANDROID_HOME/tools:$PATH
+export PATH=$ANDROID_HOME/tools/bin:$PATH
+export PATH=$ANDROID_HOME/emulator:$PATH
+export PATH=$ANDROID_HOME/ndk-bundle:$PATH
+
+# Added by min - for squid scripts within /scripts/squid
+export SQUID_PLATFORM=sdm660_64
+
+
+## Added by Min for iOS Stuff
+alias mbuildIOS="./Scripts/BazelLocal/generate_xcode_project_with_bazel.rb --generator rules_xcodeproj Retail"
+alias minstallIOS="./Scripts/BazelLocal/generate_xcode_project_with_bazel.rb Retail -d retail"
+alias gen-project='be ~/Development/ios-register/Scripts/BazelLocal/generate_xcode_project_with_bazel.rb'
+alias gen-project-retail-device='gen-project Retail --name Retail-device -d retail'
+
+function bazgen() {
+  if (( $# == 0 ))
+    then
+      echo "${RED}ERROR${NC}: You must provide a project name!"
+      return 1
+  fi
+  echo "Generating project for $1..."
+  gen-project $1 --name $1
+}
+
+# Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
+export PATH="$PATH:$HOME/.rvm/bin"
+export JAVA_HOME="/Users/mhiew/Library/Java/JavaVirtualMachines/azul-17-ARM64/Contents/Home"
+export SA_TOOLBOX_JAVA_HOME="/Users/mhiew/Library/Java/JavaVirtualMachines/azul-17-ARM64/Contents/Home"
+export STUDIO_GRADLE_JDK="/Users/mhiew/Library/Java/JavaVirtualMachines/azul-17-ARM64/Contents/Home"
