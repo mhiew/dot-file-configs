@@ -79,7 +79,7 @@ alias mmirror="scrcpy --disable-screensaver --always-on-top --max-size 1560 --sh
 
 # These commands need to be run within android-register repo
 # initial modules used for grocery team (will likely change in the future as I figure out which modules are used in practice)
-alias msetupbak="./setupIdeModules --minimal :retail:home-applet :retail:features:item-detail :retail:home-applet:internal :features:notification-center :features:notification-center-applet :retail:features:order-fulfillment :cdx:connected-peripheral-monitoring :cdx:scannerscales-ui :features:scales :hairball-features:settings-applet cdx:hardwarehub cdx:messagebar-v2 :common:barcode-scanner:impl-shared :retail:features:age-restriction-items :retail:features:quick-create:impl :reader-sdk-2 :features:tender-payment-legacy :features:tender-payment :apps:t2-retail:app :retail:common:search-components :retail:features:inventory-empty-state :retail:features:inventory-search :common:retail-analytics :common:search"
+alias msetupbak="./setupIdeModules --minimal :retail:home-applet :retail:features:item-detail :retail:home-applet:internal :features:notification-center :features:notification-center-applet :retail:features:order-fulfillment :cdx:connected-peripheral-monitoring :cdx:scannerscales-ui :features:scales :hairball-features:settings-applet cdx:hardwarehub cdx:messagebar-v2 :common:barcode-scanner:impl-shared :retail:features:age-restriction-items :retail:features:quick-create:impl :reader-sdk-2 :features:tender-payment-legacy :features:tender-payment :apps:t2-retail:app :retail:common:search-components :retail:features:inventory-empty-state :retail:features:inventory-search :common:retail-analytics :common:search :apps:x2-superpos:impl-component-wiring"
 
 # connect to squid
 alias mconnect="sudo ./scripts/squid/discover-squid-devices.sh"
@@ -109,19 +109,80 @@ alias mbuildbran="./gradlew :apps:x2-bran:app:assembleDebug"
 alias minstallsignin="./gradlew :apps:sign-in:app:installDebug"
 
 ## Profiling
-alias minstallprofile="./gradlew :apps:x2-superpos:app:installRelease -P.square.enableProfiling=true -PengBuild=false"
-alias mbuildrelease="./gradlew :apps:x2-superpos:app:assembleRelease -P.square.enableProfiling=true -PengBuild=false"
+alias minstallprofile="./gradlew :apps:x2-superpos:app:installRelease -Psquare.enableProfiling=true -PengBuild=false"
+alias mbuildprofile="./gradlew :apps:x2-superpos:app:assembleRelease -Psquare.enableProfiling=true -PengBuild=false"
+alias mbuildprofileRetail="./gradlew :apps:x2-superpos:app:assembleRelease -Psquare.enableProfiling=true -PengBuild=false -Psquare.superpos=spos,retail"
+alias minstallprofileRetail="./gradlew :apps:x2-superpos:app:installRelease -Psquare.enableProfiling=true -PengBuild=false -Psquare.superpos=spos,retail"
+alias mbuildReleaseTest="./gradlew :apps:x2-superpos:app:assembleRelease -Psquare.enableProfiling=true -Psquare.debuggable=true -Psquare.superpos=spos,retail -PengBuild=false"
+alias mbuildprofiledebug="./gradlew :apps:x2-superpos:app:assembleDebug -Psquare.enableProfiling=true"
 alias mspeedcompile="adb root && adb shell cmd package compile -f -m speed com.squareup && adb shell am force-stop com.squareup"
 alias mcheckcompilation="adb shell dumpsys package dexopt | grep -A 2 com.squareup\]"
+alias mdisabletelemetry="adb root && adb disable-verity && adb reboot && adb wait-for-device root && adb remount && adb shell rm -rf /system/app/Telemetry && adb reboot"
+alias recordPerfetto="profiler --perfetto-options '-c /Users/mhiew/Development/android-register/scripts/profiler/perfetto-config.pbtx'"
 
-# record perfetto trace
-alias mEnablePerfetto="adb shell setprop persist.traced.enable 1"
-alias mRecordPerfetto="mEnablePerfetto && ./record_android_trace -o trace_file.perfetto-trace -b 500mb -a com.squareup sched freq idle am wm gfx view binder_driver hal dalvik input res"
+# Record a perfetto trace
+# takes an optional parameter for the save file name
+function recordPerfettoLocal {
+  local traceFileName="${1:-trace_file}"
+  local currentDateTime=$(date +'%Y.%m.%d.%H.%M.%S')
+  local outputSaveFile="${traceFileName}_${currentDateTime}.perfetto-trace"
+  echo "Saving perfetto recording at $PWD/$outputSaveFile" 
 
+  adb shell setprop persist.traced.enable 1
+
+  #./record_android_trace -o $outputSaveFile -b 500mb -a com.squareup sched freq idle am wm gfx view binder_driver hal dalvik input res
+  ./record_android_trace -o $outputSaveFile -c ./scripts/profiler/perfetto-config.pbtx
+  #profiler --perfetto-options "-c /Users/mhiew/Development/android-register/scripts/profiler/perfetto-config.pbtx"
+}
+
+# Runs the perfetto analysis script on a trace file 
+function analyzePerfetto {
+  local traceFile=$1
+  local traceFilePath=$(readlink -f $traceFile)
+  [[ -f $traceFilePath ]] || { echo "No trace file provided. Exiting!"; return 1; }
+
+  echo "Beginning analysis of $traceFilePath"
+  ./scripts/run.analyze.perfetto.main.kts --trace_path $traceFilePath --mode ANALYZE
+}
+
+# Records Simple Perf
+# takes an optional parameter for the output directory name 
+function recordSimplePerf {
+  local directoryName="${1:-simpleperf}"
+  local currentDateTime=$(date +'%Y.%m.%d.%H.%M.%S')
+  local outputDirectory="${directoryName}_${currentDateTime}"
+  local fullOutputDirectory="/Users/mhiew/Desktop/$outputDirectory"
+  echo "Saving simplePerf recording at $fullOutputDirectory" 
+
+  mkdir $fullOutputDirectory
+  ./scripts/simpleperf-helper.main.kts --package com.squareup --output $fullOutputDirectory 
+
+  echo "Drag perf.trace into browser"
+  open "https://profiler.firefox.com"
+
+  echo "Opening $fullOutputDirectory"
+  open $fullOutputDirectory
+}
+
+# Benchmark
+alias recordBenchMark="benchmark --test-symbol com.squareup.macrobenchmark.retail.RetailLoadVisualBrowseBenchmarks --skip-install -ia endpoint=production unitToPair=Benchmarks engine=retail"
+
+# Lock the X2b CPU clock speeds
+function lockClock {
+  adb push /Users/mhiew/Downloads/qcs5430_disable_therm_force_perf.sh /data/local/tmp
+  adb root
+  adb shell "chmod +x /data/local/tmp/qcs5430_disable_therm_force_perf.sh"
+  adb shell "/data/local/tmp/qcs5430_disable_therm_force_perf.sh"
+}
+
+# convenience for profiler arguments
+alias quickProfile="profiler --skip-install"
 
 ## Switching endpoints
-alias mswitchProd="adb shell && adb shell setprop persist.squareup.apps.api_endpoint production && adb reboot"
-alias mswitchStaging="adb shell && adb shell setprop persist.squareup.apps.api_endpoint staging && adb reboot"
+alias mswitchProd="adb root && adb shell setprop persist.squareup.apps.api_endpoint production && sleep 5 && adb reboot"
+alias mswitchStaging="adb root && adb shell setprop persist.squareup.apps.api_endpoint staging && sleep 5 && adb reboot"
+alias mcheckEndpoint="adb root && adb shell getprop persist.squareup.apps.api_endpoint"
+alias mclearEndpoint="./scripts/register_cli signout com.squareup.signin && sleep 5 && adb shell pm clear com.squareup.signin && adb shell pm clear com.squareup && adb shell am start com.squareup.signin"
 
 
 # DEMO
@@ -140,7 +201,7 @@ alias stopapos="adb shell am force-stop com.squareup.apos"
 
 # SUPERPOS
 alias msetuptemp="./setupIdeModules --minimal :common:bootstrap-hairball"
-alias msetup="sq setupIdeModules --minimal :common:data-migration :common:data-archive :squid:common:squid-features :squid:common:squid-interface :common:app-engine-namespacing :common:data-migration-analytics"
+alias msetup="sq setupIdeModules --minimal :common:data-migration :common:data-archive :squid:common:squid-features :squid:common:squid-interface :common:app-engine-namespacing :common:data-migration-analytics :apps:x2-superpos:impl-component-wiring"
 alias minstall="./gradlew :apps:x2-superpos:app:installDebug -Psquare.superpos=spos,retail"
 alias minstallinvoices="./gradlew :apps:x2-superpos:app:installDebug -Psquare.superpos=spos,invoices"
 alias mbuild="./gradlew :apps:x2-superpos:app:assembleDebug -Psquare.superpos=spos,retail"
@@ -182,6 +243,9 @@ alias listenForMigration="adb logcat -v color raw | grep -i -e RealPosLauncher -
 
 alias listSuperPosFF="adb shell ff dump | grep -i superpos -A1 | tail +11"
 alias disableDex2Oat="adb root; adb shell setprop pm.dexopt.bg-dexopt assume-verified; adb shell setprop pm.dexopt.install assume-verified; adb shell setprop pm.dexopt.boot assume-verified; adb shell ff set-override DEXOPT_BACKGROUND_FILTER_LEVEL assume-verified; adb shell ff set-override DEXOPT_INSTALL_FILTER_LEVEL assume-verified;"
+
+## We can insert from adb without manually typing it in. This is useful for device code
+# adb shell input text WMDEH96YP6J1
 
 
 # SUPERPOS - Change Verticals
@@ -296,3 +360,21 @@ export PATH="$PATH:$ANDROID_HOME/platform-tools"
 #Default shell configs
 ######
 function t2() { local VAR=$(adb devices -l | grep t2 | cut -d " " -f 1 | sed '1q;d') ; ANDROID_SERIAL=$VAR "$@" ; }
+ 
+export PIP_CONFIG_FILE=~/.config/pip/pip.conf
+ 
+# Adding libexec/bin to path
+export PATH=$PATH:/opt/homebrew/opt/python@3/libexec/bin
+export NODE_EXTRA_CA_CERTS=/opt/homebrew/etc/ca-certificates/cert.pem
+export COREPACK_NPM_REGISTRY=https://artifactory.global.square/artifactory/api/npm/square-npm/
+export COREPACK_INTEGRITY_KEYS=0
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh" # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && . "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+#profiler
+[[ -f /Users/mhiew/Development/android-register/scripts/profiler/source-autocomplete.sh ]] && source /Users/mhiew/Development/android-register/scripts/profiler/source-autocomplete.sh
+
+
+# to be able to use ~/android-register/scripts/simpleperf-helper.main.kts 
+#source /Users/mhiew/Development/android-register/scripts/android-sdk-setup.sh
