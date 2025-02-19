@@ -1,3 +1,7 @@
+## We rely on a few programs
+# fzf - brew install fzf
+# zoxide - brew install zoxide
+# tmux - brew install tmux
 
 ## zsh changes for history
 # increase history size
@@ -37,3 +41,10 @@ alias mshell="source ~/.zshrc"
 
 #use vim keybindings for shell commands
 set -o vi
+
+# always use ls with color
+alias ls='ls --color'
+
+# Shell integrations
+eval "$(fzf --zsh)"
+eval "$(zoxide init --cmd cd zsh)"
