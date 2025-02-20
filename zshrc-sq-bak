@@ -13,6 +13,7 @@ source ~/Development/config_files/square/zshrc
 #   source $SQUARE_HOME/config_files/square/bundler-exec.sh
 # fi
 
+
 # load the aliases in config_files files (optional)
 source ~/Development/config_files/square/aliases
 
@@ -35,11 +36,20 @@ export DISABLE_SETUPIDEMODULES_HOOK=1
 #case insensitive autocomplete
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
 
+
+# Enable ctrl-x-e to edit commandline
+autoload -U edit-command-line
+zle -N edit-command-line
+bindkey '^xe' edit-command-line
+bindkey '^x^e' edit-command-line
+
+
 ### zsh changes for history
 # increase history size
 HISTFILE=~/.zsh_history
 HISTSIZE=999999999
 SAVEHIST=$HISTSIZE
+HISTDUP=erase
 
 # automatically append to history file instead of on shell exit
 setopt INC_APPEND_HISTORY
@@ -51,6 +61,9 @@ setopt EXTENDED_HISTORY
 # remove duplicates
 setopt HIST_FIND_NO_DUPS
 setopt HIST_IGNORE_ALL_DUPS
+setopt HIST_SAVE_NO_DUPS
+setopt HIST_IGNORE_DUPS
+setopt HIST_FIND_NO_DUPS
 
 # share history between tabs
 setopt SHARE_HISTORY
@@ -110,30 +123,39 @@ alias minstallsignin="./gradlew :apps:sign-in:app:installDebug"
 
 ## Profiling
 alias minstallprofile="./gradlew :apps:x2-superpos:app:installRelease -Psquare.enableProfiling=true -PengBuild=false"
+alias minstallprofilecots="./gradlew :apps:spos:app:installRelease -Psquare.enableProfiling=true -PengBuild=false -Psquare.superpos=spos,retail"
+alias minstallprofilecotsdebug="./gradlew :apps:spos:app:installDebug -Psquare.enableProfiling=true -Psquare.superpos=spos,retail"
+alias minstallprofilecotsr8="./gradlew :apps:spos:app:installRelease -Psquare.enableProfiling=true -PengBuild=false -Psquare.superpos=spos,retail -Psquare.minifyUsingR8=true -Dcom.android.tools.r8.printtimes=true"
+alias mbuildprofilecots="./gradlew :apps:spos:app:assembleRelease -Psquare.enableProfiling=true -PengBuild=false -Psquare.superpos=spos,retail"
+alias mbuildprofilecotsdebug="./gradlew :apps:spos:app:assembleDebug -Psquare.enableProfiling=true -Psquare.superpos=spos,retail"
 alias mbuildprofile="./gradlew :apps:x2-superpos:app:assembleRelease -Psquare.enableProfiling=true -PengBuild=false"
 alias mbuildprofileRetail="./gradlew :apps:x2-superpos:app:assembleRelease -Psquare.enableProfiling=true -PengBuild=false -Psquare.superpos=spos,retail"
 alias minstallprofileRetail="./gradlew :apps:x2-superpos:app:installRelease -Psquare.enableProfiling=true -PengBuild=false -Psquare.superpos=spos,retail"
 alias mbuildReleaseTest="./gradlew :apps:x2-superpos:app:assembleRelease -Psquare.enableProfiling=true -Psquare.debuggable=true -Psquare.superpos=spos,retail -PengBuild=false"
 alias mbuildprofiledebug="./gradlew :apps:x2-superpos:app:assembleDebug -Psquare.enableProfiling=true"
 alias mspeedcompile="adb root && adb shell cmd package compile -f -m speed com.squareup && adb shell am force-stop com.squareup"
+alias mspeedcompilecotsdebug="adb root && adb shell cmd package compile -f -m speed com.squareup.eng && adb shell am force-stop com.squareup.eng"
 alias mcheckcompilation="adb shell dumpsys package dexopt | grep -A 2 com.squareup\]"
 alias mdisabletelemetry="adb root && adb disable-verity && adb reboot && adb wait-for-device root && adb remount && adb shell rm -rf /system/app/Telemetry && adb reboot"
-alias recordPerfetto="profiler --perfetto-options '-c /Users/mhiew/Development/android-register/scripts/profiler/perfetto-config.pbtx'"
+#alias recordPerfetto="profiler --open-result-in-browser --skip-install --perfetto-options '-c $HOME/Development/android-register/scripts/profiler/perfetto-config.pbtx'"
+alias recordPerfettoCotsLocal="/Users/mhiew/Development/android-register/scripts/profiler/record-compose-trace.sh"
+
+# compose layout inspect
+alias enableLayoutInspector="adb shell settings put global debug_view_attributes 1"
+alias disableLayoutInspector="adb shell settings delete global debug_view_attributes"
 
 # Record a perfetto trace
 # takes an optional parameter for the save file name
-function recordPerfettoLocal {
+function recordPerfetto {
   local traceFileName="${1:-trace_file}"
-  local currentDateTime=$(date +'%Y.%m.%d.%H.%M.%S')
-  local outputSaveFile="${traceFileName}_${currentDateTime}.perfetto-trace"
-  echo "Saving perfetto recording at $PWD/$outputSaveFile" 
+  local outputSaveFile="${traceFileName}.perfetto-trace"
 
   adb shell setprop persist.traced.enable 1
 
-  #./record_android_trace -o $outputSaveFile -b 500mb -a com.squareup sched freq idle am wm gfx view binder_driver hal dalvik input res
-  ./record_android_trace -o $outputSaveFile -c ./scripts/profiler/perfetto-config.pbtx
-  #profiler --perfetto-options "-c /Users/mhiew/Development/android-register/scripts/profiler/perfetto-config.pbtx"
+  #./record_android_trace -o $outputSaveFile -c ./scripts/profiler/perfetto-config.pbtx
+  profiler --open-result-in-browser --skip-install --perfetto-file-name $outputSaveFile --perfetto-options "-c $HOME/Development/android-register/scripts/profiler/perfetto-config.pbtx"
 }
+
 
 # Runs the perfetto analysis script on a trace file 
 function analyzePerfetto {
@@ -161,11 +183,13 @@ function recordSimplePerf {
   open "https://profiler.firefox.com"
 
   echo "Opening $fullOutputDirectory"
-  open $fullOutputDirectory
 }
 
 # Benchmark
+alias installBenchmarkApp="./gradlew :tooling:macro-benchmark:installDebugAndroidTest"
+alias benchmarkCheckout="adb -s 192.168.4.189:5555 shell am instrument -w -e class 'com.squareup.macrobenchmark.retail.RetailCheckoutBenchmarks#showPaymentMethodScreen' -e iterations 50 -e appUnderTest com.squareup -e engine retail -e runner mhiew -e androidx.benchmark.suppressErrors LOW-BATTERY,DEBUGGABLE -e androidx.benchmark.compilation.enabled false -e disableAnalytics true -e endpoint production -e engine retail -e unitToPair Benchmarks -e additionalTestOutputDir /sdcard/Android/media/com.squareup.macrobenchmark.test/additional_test_output com.squareup.macrobenchmark.test/androidx.test.runner.AndroidJUnitRunner"
 alias recordBenchMark="benchmark --test-symbol com.squareup.macrobenchmark.retail.RetailLoadVisualBrowseBenchmarks --skip-install -ia endpoint=production unitToPair=Benchmarks engine=retail"
+alias recordBenchMarkCheckout="benchmark --test-symbol com.squareup.macrobenchmark.retail.RetailCheckoutBenchmarks --skip-install -ia endpoint=production unitToPair=Benchmarks engine=retail"
 
 # Lock the X2b CPU clock speeds
 function lockClock {
@@ -179,9 +203,9 @@ function lockClock {
 alias quickProfile="profiler --skip-install"
 
 ## Switching endpoints
-alias mswitchProd="adb root && adb shell setprop persist.squareup.apps.api_endpoint production && sleep 5 && adb reboot"
-alias mswitchStaging="adb root && adb shell setprop persist.squareup.apps.api_endpoint staging && sleep 5 && adb reboot"
-alias mcheckEndpoint="adb root && adb shell getprop persist.squareup.apps.api_endpoint"
+alias mswitchProd="adb root && adb shell setprop persist.square.apps.api_endpoint production && sleep 5 && adb reboot"
+alias mswitchStaging="adb root && adb shell setprop persist.square.apps.api_endpoint staging && sleep 5 && adb reboot"
+alias mcheckEndpoint="adb root && adb shell getprop persist.square.apps.api_endpoint"
 alias mclearEndpoint="./scripts/register_cli signout com.squareup.signin && sleep 5 && adb shell pm clear com.squareup.signin && adb shell pm clear com.squareup && adb shell am start com.squareup.signin"
 
 
@@ -201,7 +225,7 @@ alias stopapos="adb shell am force-stop com.squareup.apos"
 
 # SUPERPOS
 alias msetuptemp="./setupIdeModules --minimal :common:bootstrap-hairball"
-alias msetup="sq setupIdeModules --minimal :common:data-migration :common:data-archive :squid:common:squid-features :squid:common:squid-interface :common:app-engine-namespacing :common:data-migration-analytics :apps:x2-superpos:impl-component-wiring"
+alias msetup="sq setupIdeModules --minimal :common:data-migration :common:data-archive :common:app-engine-namespacing :common:data-migration-analytics :retail:home-applet :features:visual-browse :tooling:cyborgs :apps:spos:app"
 alias minstall="./gradlew :apps:x2-superpos:app:installDebug -Psquare.superpos=spos,retail"
 alias minstallinvoices="./gradlew :apps:x2-superpos:app:installDebug -Psquare.superpos=spos,invoices"
 alias mbuild="./gradlew :apps:x2-superpos:app:assembleDebug -Psquare.superpos=spos,retail"
@@ -373,8 +397,11 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/bash_completion" ] && . "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
 #profiler
-[[ -f /Users/mhiew/Development/android-register/scripts/profiler/source-autocomplete.sh ]] && source /Users/mhiew/Development/android-register/scripts/profiler/source-autocomplete.sh
+[[ -f $HOME/Development/android-register/scripts/profiler/source-autocomplete.sh ]] && source $HOME/Development/android-register/scripts/profiler/source-autocomplete.sh
 
+# Shell integrations
+eval "$(fzf --zsh)"
+eval "$(zoxide init --cmd cd zsh)"
 
 # to be able to use ~/android-register/scripts/simpleperf-helper.main.kts 
 #source /Users/mhiew/Development/android-register/scripts/android-sdk-setup.sh
