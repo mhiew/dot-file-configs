@@ -225,8 +225,8 @@ alias stopapos="adb shell am force-stop com.squareup.apos"
 
 # SUPERPOS
 alias msetuptemp="./setupIdeModules --minimal :common:bootstrap-hairball"
-alias msetup="sq setupIdeModules --minimal :common:data-migration :common:data-archive :common:app-engine-namespacing :common:data-migration-analytics :retail:home-applet :features:visual-browse :tooling:cyborgs :apps:spos:app"
-alias minstall="./gradlew :apps:x2-superpos:app:installDebug -Psquare.superpos=spos,retail"
+alias msetup="sq setupIdeModules :common:data-migration :common:data-archive :common:app-engine-namespacing :common:data-migration-analytics :retail:home-applet :features:visual-browse :tooling:cyborgs :apps:spos:app"
+alias minstall="./gradlew :apps:x2-superpos:app:installDebug -Psquare.superpos=spos,retail,restaurants"
 alias minstallinvoices="./gradlew :apps:x2-superpos:app:installDebug -Psquare.superpos=spos,invoices"
 alias mbuild="./gradlew :apps:x2-superpos:app:assembleDebug -Psquare.superpos=spos,retail"
 alias minstallall="./gradlew :apps:x2-superpos:app:installDebug -Psquare.superpos=spos,retail,appointments,restaurants"
@@ -377,9 +377,11 @@ export STUDIO_GRADLE_JDK="/Users/mhiew/Library/Java/JavaVirtualMachines/azul-17-
 
 export ANDROID_HOME="/Users/mhiew/Library/Android/sdk"
 export ANDROID_SDK_ROOT="$ANDROID_HOME"
+export ANDROID_NDK="$ANDROID_HOME/ndk/28.0.13004108"
 export PATH="$PATH:$ANDROID_HOME/cmdline-tools/latest/bin"
 export PATH="$PATH:$ANDROID_HOME/tools/bin"
 export PATH="$PATH:$ANDROID_HOME/platform-tools"
+
 ### The lines in this section are added automatically by salt. Do not modify. ###
 #Default shell configs
 ######
@@ -399,9 +401,48 @@ export NVM_DIR="$HOME/.nvm"
 #profiler
 [[ -f $HOME/Development/android-register/scripts/profiler/source-autocomplete.sh ]] && source $HOME/Development/android-register/scripts/profiler/source-autocomplete.sh
 
+# git helpers (requires fzf)
+#fuzzy search over branches
+alias fsb='~/fsb.sh'
+#fuzzy search over commits
+alias fsc='~/fsc.sh'
+
+function git_ammend {
+    if [ -z "$1" ]; then
+        git commit --amend --no-edit;
+    else 
+        git commit --amend -m "$@";
+    fi;
+}
+
+#fzf configs
+# Setting fd as the default source for fzf
+export FZF_DEFAULT_COMMAND='fd --type f --strip-cwd-prefix'
+# To apply the command to CTRL-T as well
+export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+
+export FZF_CTRL_T_OPTS="
+  --walker-skip .git,node_modules,target
+  --preview 'bat -n --color=always {}'
+  --bind 'ctrl-/:change-preview-window(down|hidden|)'"
+
+# CTRL-Y to copy the command into clipboard using pbcopy
+export FZF_CTRL_R_OPTS="
+  --bind 'ctrl-y:execute-silent(echo -n {2..} | pbcopy)+abort'
+  --color header:italic
+  --header 'Press CTRL-Y to copy command into clipboard'"
+
+export FZF_ALT_C_OPTS="
+  --walker-skip .git,node_modules,target
+  --preview 'tree -C {}'"
+
 # Shell integrations
 eval "$(fzf --zsh)"
 eval "$(zoxide init --cmd cd zsh)"
+
+# Tmux
+alias ta="tmux attach -t main"
+alias c="clear; tmux clear-history"
 
 # to be able to use ~/android-register/scripts/simpleperf-helper.main.kts 
 #source /Users/mhiew/Development/android-register/scripts/android-sdk-setup.sh
