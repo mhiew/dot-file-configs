@@ -33,3 +33,6 @@ A place to drop some tools preferences and configurations for ease of sharing be
 - brew tap homebrew/cask
 - brew install --cask font-jetbrains-mono-nerd-font
 - update iterm2 Settings > Profile > Text > Font
+
+## Git 
+- use `git config --global --add --bool rebase.updateRefs true` [reference](https://andrewlock.net/working-with-stacked-branches-in-git-is-easier-with-update-refs/)
