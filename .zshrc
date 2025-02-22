@@ -5,6 +5,12 @@
 # fd - brew install fd
 # bat - brew install bat
 
+
+## press ctrl-v to edit command line in editor
+autoload -Uz edit-command-line
+zle -N edit-command-line
+bindkey '^v' edit-command-line
+
 ## zsh changes for history
 # increase history size
 HISTFILE=~/.zsh_history

@@ -37,12 +37,10 @@ export DISABLE_SETUPIDEMODULES_HOOK=1
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
 
 
-# Enable ctrl-x-e to edit commandline
-autoload -U edit-command-line
+# Enable ctrl-v to edit commandline
+autoload -Uz edit-command-line
 zle -N edit-command-line
-bindkey '^xe' edit-command-line
-bindkey '^x^e' edit-command-line
-
+bindkey '^v' edit-command-line
 
 ### zsh changes for history
 # increase history size
