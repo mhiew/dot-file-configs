@@ -27,6 +27,9 @@ setopt HIST_FIND_NO_DUPS
 # share history between tabs
 setopt SHARE_HISTORY
 
+# hide macbook and username from prompt
+PS1="%1d$ "
+
 # automatically show extended options and the last 30 items
 alias history="history -E -30"
 alias allhistory="history -9999999"
@@ -44,6 +47,8 @@ set -o vi
 
 # always use ls with color
 alias ls='ls --color'
+
+alias c='clear'
 
 # Shell integrations
 eval "$(fzf --zsh)"
