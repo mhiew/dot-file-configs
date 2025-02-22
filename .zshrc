@@ -5,6 +5,8 @@
 # fd - brew install fd
 # bat - brew install bat
 
+# disable zsh beep sound
+unsetopt beep
 
 ## press ctrl-v to edit command line in editor
 autoload -Uz edit-command-line
@@ -51,7 +53,7 @@ alias gwp="./gradlew -p" #allows autocompletion
 alias mshell="source ~/.zshrc"
 
 #use vim keybindings for shell commands
-set -o vi
+#set -o vi
 
 # always use ls with color
 alias ls='ls --color'
@@ -64,7 +66,7 @@ alias fsb='~/fsb.sh'
 #fuzzy search over commits
 alias fsc='~/fsc.sh'
 
-function git_ammend {
+function gitamend {
     if [ -z "$1" ]; then
         git commit --amend --no-edit;
     else 

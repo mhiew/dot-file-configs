@@ -36,3 +36,10 @@ A place to drop some tools preferences and configurations for ease of sharing be
 
 ## Git 
 - use `git config --global --add --bool rebase.updateRefs true` [reference](https://andrewlock.net/working-with-stacked-branches-in-git-is-easier-with-update-refs/)
+
+## Warnings
+`.zshrc` vi bindings seem to cause an lot of issues so I am going to avoid using it.
+In particular whenever we hit escape to go into vi mode we have troubles exiting it and certain words in the cli are not editable.
+```
+set -o vi
+```

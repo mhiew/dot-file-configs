@@ -33,6 +33,7 @@ color dracula
 
 " ========================================
 " GENERAL
+:set belloff=all
 :set encoding=utf-8
 :set modelines=0
 :set wrap
