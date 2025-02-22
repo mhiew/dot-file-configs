@@ -27,3 +27,8 @@ A place to drop some tools preferences and configurations for ease of sharing be
 
 ## Better Touch Tool
 - TODO
+
+## NerdFont
+- brew tap homebrew/cask
+- brew install --cask font-jetbrains-mono-nerd-font
+- update iterm2 Settings > Profile > Text > Font
