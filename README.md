@@ -9,6 +9,7 @@ A place to drop some tools preferences and configurations for ease of sharing be
 - brew install zoxide
 - brew install tmux
 - brew install tpm
+- brew install bat
 
 ## initial setup
 - either copy or source the `.zshrc` file

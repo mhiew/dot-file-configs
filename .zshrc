@@ -2,6 +2,8 @@
 # fzf - brew install fzf
 # zoxide - brew install zoxide
 # tmux - brew install tmux
+# fd - brew install fd
+# bat - brew install bat
 
 ## zsh changes for history
 # increase history size
@@ -48,7 +50,7 @@ set -o vi
 # always use ls with color
 alias ls='ls --color'
 
-alias c='clear'
+alias c='clear; tmux clear-history'
 
 # git helpers (requires fzf)
 #fuzzy search over branches
@@ -67,3 +69,20 @@ function git_ammend {
 # Shell integrations
 eval "$(fzf --zsh)"
 eval "$(zoxide init --cmd cd zsh)"
+
+#fzf configs
+export FZF_CTRL_T_OPTS="
+  --walker-skip .git,node_modules,target
+  --preview 'bat -n --color=always {}'
+  --bind 'ctrl-/:change-preview-window(down|hidden|)'"
+
+# CTRL-Y to copy the command into clipboard using pbcopy
+export FZF_CTRL_R_OPTS="
+  --bind 'ctrl-y:execute-silent(echo -n {2..} | pbcopy)+abort'
+  --color header:italic
+  --header 'Press CTRL-Y to copy command into clipboard'"
+
+export FZF_ALT_C_OPTS="
+  --walker-skip .git,node_modules,target
+  --preview 'tree -C {}'"
+
