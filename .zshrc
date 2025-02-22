@@ -50,6 +50,20 @@ alias ls='ls --color'
 
 alias c='clear'
 
+# git helpers (requires fzf)
+#fuzzy search over branches
+alias fsb='~/fsb.sh'
+#fuzzy search over commits
+alias fsc='~/fsc.sh'
+
+function git_ammend {
+    if [ -z "$1" ]; then
+        git commit --amend --no-edit;
+    else 
+        git commit --amend -m "$@";
+    fi;
+}
+
 # Shell integrations
 eval "$(fzf --zsh)"
 eval "$(zoxide init --cmd cd zsh)"
