@@ -12,13 +12,12 @@ A place to drop some tools preferences and configurations for ease of sharing be
 - brew install bat
 
 ## initial setup
-- either copy or source the `.zshrc` file
-- copy the `.vimrc`
-- copy `.ideavimrc`
+- source the `.zshrc` ie. `source $HOME/Developer/Program-Tool-Configurations/.zshrc`
+- source the `.vimrc` ie. `source $HOME/Developer/Program-Tool-Configurations/.vimrc`
+- source the `.ideavimrc` ie. `source $HOME/Developer/Program-Tool-Configurations/.ideavimrc`
 
-
-## Tmux setup
-- copy `.tmux.conf`
+## tmux setup
+- source the `.tmux.conf` ie. `source $HOME/Developer/Program-Tool-Configurations/.tmux.conf`
 - launch `tmux`
 - `<C-a> I` to install tpm plugins
 - use `<C-a> u` to uninstall tpm plugins that are removed from `.tmux.conf`
@@ -34,12 +33,16 @@ A place to drop some tools preferences and configurations for ease of sharing be
 - brew install --cask font-jetbrains-mono-nerd-font
 - update iterm2 Settings > Profile > Text > Font
 
+## iterm2
+- TODO
+
 ## Git 
 - use `git config --global --add --bool rebase.updateRefs true` [reference](https://andrewlock.net/working-with-stacked-branches-in-git-is-easier-with-update-refs/)
 
-## Warnings
-`.zshrc` vi bindings seem to cause an lot of issues so I am going to avoid using it.
+## .zsrhc  Warnings
+`.zshrc` `vi` bindings seem to cause an lot of issues so I am going to avoid using it.
 In particular whenever we hit escape to go into vi mode we have troubles exiting it and certain words in the cli are not editable.
+So do not use:
 ```
 set -o vi
 ```

@@ -5,6 +5,8 @@
 # fd - brew install fd
 # bat - brew install bat
 
+DIR="$(dirname "$(realpath "$0")")"
+
 # disable zsh beep sound
 unsetopt beep
 
@@ -62,9 +64,9 @@ alias c='clear; tmux clear-history'
 
 # git helpers (requires fzf)
 #fuzzy search over branches
-alias fsb='~/fsb.sh'
+alias fsb='${DIR}/scripts/fsb.sh'
 #fuzzy search over commits
-alias fsc='~/fsc.sh'
+alias fsc='${DIR}/scripts/fsc.sh'
 
 function gitamend {
     if [ -z "$1" ]; then
