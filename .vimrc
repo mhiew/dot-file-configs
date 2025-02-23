@@ -169,6 +169,9 @@ vnoremap <c-k> 15gkzz
 nnoremap ' `
 nnoremap ` '
 
+" paste without losing the buffer
+xnoremap <leader>p "_dP
+
 " Set syntax highlighting for fastlane files
 au BufNewFile,BufRead Fastfile set filetype=ruby
 
