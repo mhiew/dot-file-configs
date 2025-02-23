@@ -131,10 +131,6 @@ vnoremap <c-H> ^
 vnoremap <c-L> $
 vnoremap L $
 
-" make ; function as : to write commands (
-noremap ; :
-vnoremap ; :
-
 " remap U to <C-r> for easier redo
 nnoremap U <C-r>
 
