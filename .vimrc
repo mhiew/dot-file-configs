@@ -163,6 +163,10 @@ nnoremap <c-k> 15gkzz
 vnoremap <c-j> 15gjzz
 vnoremap <c-k> 15gkzz
 
+" auto center page up and page down
+nnoremap <c-u> <c-u>zz
+nnoremap <c-d> <c-d>zz
+
 " Swap implementations of ` and ' jump to markers
 " By default, ' jumps to the marked line, ` jumps to the marked line and
 " column, so swap them
