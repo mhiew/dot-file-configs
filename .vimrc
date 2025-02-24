@@ -17,6 +17,7 @@ call plug#begin('~/.vim/plugged')
 
 " surround plugin to match ideavim
 Plug 'https://github.com/tpope/vim-surround'
+Plug 'https://github.com/tpope/vim-repeat'
 
 " dracula color
 Plug 'dracula/vim'
@@ -166,6 +167,10 @@ vnoremap <c-k> 15gkzz
 " auto center page up and page down
 nnoremap <c-u> <c-u>zz
 nnoremap <c-d> <c-d>zz
+
+" auto center search up and down
+nnoremap n nzzzv
+nnoremap N Nzzzv
 
 " Swap implementations of ` and ' jump to markers
 " By default, ' jumps to the marked line, ` jumps to the marked line and

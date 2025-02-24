@@ -15,6 +15,7 @@ A place to drop some tools preferences and configurations for ease of sharing be
 - source the `.zshrc` ie. `source $HOME/Developer/Program-Tool-Configurations/.zshrc`
 - source the `.vimrc` ie. `source /Users/minhiew/Developer/Program-Tool-Configurations/.vimrc`. 
     - note use absolute path for `.vimrc` otherwise `.ideavimrc` wont be able to locate it as it doesn't understand path expansion
+    - run `:PlugInstall` to get all the plugins we need
 - source the `.ideavimrc` ie. `source $HOME/Developer/Program-Tool-Configurations/.ideavimrc`
 
 ## tmux setup
@@ -25,6 +26,9 @@ A place to drop some tools preferences and configurations for ease of sharing be
 
 ## Setup Android Studios
 - import one of the android studios settings
+- plugins: 
+    - IdeaVim which is sourced from our `~/ideavimrc`
+    - RelativeLineNumbers which we can configure to show both relative and absolute line numbers at the same time [reference](https://stackoverflow.com/a/78374798)
 
 ## Better Touch Tool
 - TODO
