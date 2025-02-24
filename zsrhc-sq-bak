@@ -1,0 +1,373 @@
+#######################################################
+# load Square specific zshrc; please don't change this bit.
+#######################################################
+source ~/Development/config_files/square/zshrc
+#######################################################
+
+###########################################
+# Feel free to make your own changes below.
+###########################################
+
+# uncomment to automatically `bundle exec` common ruby commands
+# if [[ -f "$SQUARE_HOME/config_files/square/bundler-exec.sh" ]]; then
+#   source $SQUARE_HOME/config_files/square/bundler-exec.sh
+# fi
+
+
+# load the aliases in config_files files (optional)
+source ~/Development/config_files/square/aliases
+
+[[ -f "$HOME/.aliases" ]] && source "$HOME/.aliases"
+[[ -f "$HOME/.localaliases" ]] && source "$HOME/.localaliases"
+
+source $HOME/Development/Program-Tool-Configurations/.zshrc
+
+
+# Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
+export PATH="$PATH:$HOME/.rvm/bin"
+# Added by sa-tools
+export JAVA_HOME="/Users/mhiew/Library/Java/JavaVirtualMachines/azul-17-ARM64/Contents/Home"
+export SA_TOOLBOX_JAVA_HOME="/Users/mhiew/Library/Java/JavaVirtualMachines/azul-17-ARM64/Contents/Home"
+export STUDIO_GRADLE_JDK="/Users/mhiew/Library/Java/JavaVirtualMachines/azul-17-ARM64/Contents/Home"
+function bran() { local VAR=$(adb devices -l | grep bran | cut -d " " -f 1 | sed '1q;d') ; ANDROID_SERIAL=$VAR "$@" ; }
+function hodor() { local VAR=$(adb devices -l | grep hodor | cut -d " " -f 1 | sed '1q;d') ; ANDROID_SERIAL=$VAR "$@" ; }
+
+# opt out of automatic setupIdeModules git hook https://square.slack.com/archives/C02GDC2JP/p1704741274803199
+export DISABLE_SETUPIDEMODULES_HOOK=1
+
+#case insensitive autocomplete
+zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
+
+
+# automatically show extended options and the last 30 items
+alias history="history -E -30"
+alias allhistory="history -9999999"
+
+###
+# gradlew
+alias gw="./gradlew"
+alias gwp="./gradlew -p" #allows autocompletion
+
+# traversal to our android repo
+alias mretail="cd /Users/mhiew/Development/android-register"
+alias mregister="cd /Users/mhiew/Development/android-register"
+
+# Mirrors the squid device for screensharing and recording
+alias mmirror="scrcpy --disable-screensaver --always-on-top --max-size 1560 --show-touches --record recording.mp4"
+
+# These commands need to be run within android-register repo
+# initial modules used for grocery team (will likely change in the future as I figure out which modules are used in practice)
+alias msetupbak="./setupIdeModules --minimal :retail:home-applet :retail:features:item-detail :retail:home-applet:internal :features:notification-center :features:notification-center-applet :retail:features:order-fulfillment :cdx:connected-peripheral-monitoring :cdx:scannerscales-ui :features:scales :hairball-features:settings-applet cdx:hardwarehub cdx:messagebar-v2 :common:barcode-scanner:impl-shared :retail:features:age-restriction-items :retail:features:quick-create:impl :reader-sdk-2 :features:tender-payment-legacy :features:tender-payment :apps:t2-retail:app :retail:common:search-components :retail:features:inventory-empty-state :retail:features:inventory-search :common:retail-analytics :common:search :apps:x2-superpos:impl-component-wiring"
+
+# connect to squid
+alias mconnect="sudo ./scripts/squid/discover-squid-devices.sh"
+
+# toggle wifi
+alias enableWifi="adb shell svc wifi enable"
+alias disableWifi="adb shell svc wifi disable"
+
+# skip prepush checks (do not use --no-verify as it's dangerous)
+# use this like skip git push -u
+alias skip="SKIP_PREPUSH_CHECKS=1"
+
+# compiling and installing the x2 retail app for connected adb devices
+alias minstallbak="./gradlew :apps:x2-retail:app:installDebug"
+alias minstallretail="./gradlew :apps:x2-retail:app:installDebug"
+alias minstallretailRelease="./gradlew :apps:x2-retail:app:installRelease PengBuild=false"
+alias minstallspos="./gradlew :apps:x2-spos:app:installDebug"
+alias minstallapos="./gradlew :apps:x2-appointments:app:installDebug"
+alias minstallrst="./gradlew :apps:x2-restaurants:app:installDebug"
+alias minstallRelease="./gradlew :apps:x2-retail:app:installRelease -PengBuild=false" #we need -PengBuild to see the installRelease task
+alias mprofile="./gradlew :apps:x2-retail:app:installRelease -Psquare.enableProfiling=true -PengBuild=false"
+alias minstallbran="bran ./gradlew :apps:x2-bran:app:installDebug"
+alias minstallstatusbar="./gradlew :apps:squid-statusbar:app:installDebug"
+alias minstallT2="./gradlew :apps:t2-superpos:app:installDebug -Psquare.superpos=spos,terminal-api"
+alias minstallTerminalApi="./gradlew :apps:t2-terminal-api:app:installDebug"
+alias mbuildbran="./gradlew :apps:x2-bran:app:assembleDebug"
+alias minstallsignin="./gradlew :apps:sign-in:app:installDebug"
+
+## Profiling
+alias minstallprofile="./gradlew :apps:x2-superpos:app:installRelease -Psquare.enableProfiling=true -PengBuild=false"
+alias minstallprofilecots="./gradlew :apps:spos:app:installRelease -Psquare.enableProfiling=true -PengBuild=false -Psquare.superpos=spos,retail"
+alias minstallprofilecotsdebug="./gradlew :apps:spos:app:installDebug -Psquare.enableProfiling=true -Psquare.superpos=spos,retail"
+alias minstallprofilecotsr8="./gradlew :apps:spos:app:installRelease -Psquare.enableProfiling=true -PengBuild=false -Psquare.superpos=spos,retail -Psquare.minifyUsingR8=true -Dcom.android.tools.r8.printtimes=true"
+alias mbuildprofilecots="./gradlew :apps:spos:app:assembleRelease -Psquare.enableProfiling=true -PengBuild=false -Psquare.superpos=spos,retail"
+alias mbuildprofilecotsdebug="./gradlew :apps:spos:app:assembleDebug -Psquare.enableProfiling=true -Psquare.superpos=spos,retail"
+alias mbuildprofile="./gradlew :apps:x2-superpos:app:assembleRelease -Psquare.enableProfiling=true -PengBuild=false"
+alias mbuildprofileRetail="./gradlew :apps:x2-superpos:app:assembleRelease -Psquare.enableProfiling=true -PengBuild=false -Psquare.superpos=spos,retail"
+alias minstallprofileRetail="./gradlew :apps:x2-superpos:app:installRelease -Psquare.enableProfiling=true -PengBuild=false -Psquare.superpos=spos,retail"
+alias mbuildReleaseTest="./gradlew :apps:x2-superpos:app:assembleRelease -Psquare.enableProfiling=true -Psquare.debuggable=true -Psquare.superpos=spos,retail -PengBuild=false"
+alias mbuildprofiledebug="./gradlew :apps:x2-superpos:app:assembleDebug -Psquare.enableProfiling=true"
+alias mspeedcompile="adb root && adb shell cmd package compile -f -m speed com.squareup && adb shell am force-stop com.squareup"
+alias mspeedcompilecotsdebug="adb root && adb shell cmd package compile -f -m speed com.squareup.eng && adb shell am force-stop com.squareup.eng"
+alias mcheckcompilation="adb shell dumpsys package dexopt | grep -A 2 com.squareup\]"
+alias mdisabletelemetry="adb root && adb disable-verity && adb reboot && adb wait-for-device root && adb remount && adb shell rm -rf /system/app/Telemetry && adb reboot"
+#alias recordPerfetto="profiler --open-result-in-browser --skip-install --perfetto-options '-c $HOME/Development/android-register/scripts/profiler/perfetto-config.pbtx'"
+alias recordPerfettoCotsLocal="/Users/mhiew/Development/android-register/scripts/profiler/record-compose-trace.sh"
+
+# compose layout inspect
+alias enableLayoutInspector="adb shell settings put global debug_view_attributes 1"
+alias disableLayoutInspector="adb shell settings delete global debug_view_attributes"
+
+# Record a perfetto trace
+# takes an optional parameter for the save file name
+function recordPerfetto {
+  local traceFileName="${1:-trace_file}"
+  local outputSaveFile="${traceFileName}.perfetto-trace"
+
+  adb shell setprop persist.traced.enable 1
+
+  #./record_android_trace -o $outputSaveFile -c ./scripts/profiler/perfetto-config.pbtx
+  profiler --open-result-in-browser --skip-install --perfetto-file-name $outputSaveFile --perfetto-options "-c $HOME/Development/android-register/scripts/profiler/perfetto-config.pbtx"
+}
+
+
+# Runs the perfetto analysis script on a trace file 
+function analyzePerfetto {
+  local traceFile=$1
+  local traceFilePath=$(readlink -f $traceFile)
+  [[ -f $traceFilePath ]] || { echo "No trace file provided. Exiting!"; return 1; }
+
+  echo "Beginning analysis of $traceFilePath"
+  ./scripts/run.analyze.perfetto.main.kts --trace_path $traceFilePath --mode ANALYZE
+}
+
+# Records Simple Perf
+# takes an optional parameter for the output directory name 
+function recordSimplePerf {
+  local directoryName="${1:-simpleperf}"
+  local currentDateTime=$(date +'%Y.%m.%d.%H.%M.%S')
+  local outputDirectory="${directoryName}_${currentDateTime}"
+  local fullOutputDirectory="/Users/mhiew/Desktop/$outputDirectory"
+  echo "Saving simplePerf recording at $fullOutputDirectory" 
+
+  mkdir $fullOutputDirectory
+  ./scripts/simpleperf-helper.main.kts --package com.squareup --output $fullOutputDirectory 
+
+  echo "Drag perf.trace into browser"
+  open "https://profiler.firefox.com"
+
+  echo "Opening $fullOutputDirectory"
+}
+
+# Benchmark
+alias installBenchmarkApp="./gradlew :tooling:macro-benchmark:installDebugAndroidTest"
+alias benchmarkCheckout="adb -s 192.168.4.189:5555 shell am instrument -w -e class 'com.squareup.macrobenchmark.retail.RetailCheckoutBenchmarks#showPaymentMethodScreen' -e iterations 50 -e appUnderTest com.squareup -e engine retail -e runner mhiew -e androidx.benchmark.suppressErrors LOW-BATTERY,DEBUGGABLE -e androidx.benchmark.compilation.enabled false -e disableAnalytics true -e endpoint production -e engine retail -e unitToPair Benchmarks -e additionalTestOutputDir /sdcard/Android/media/com.squareup.macrobenchmark.test/additional_test_output com.squareup.macrobenchmark.test/androidx.test.runner.AndroidJUnitRunner"
+alias recordBenchMark="benchmark --test-symbol com.squareup.macrobenchmark.retail.RetailLoadVisualBrowseBenchmarks --skip-install -ia endpoint=production unitToPair=Benchmarks engine=retail"
+alias recordBenchMarkCheckout="benchmark --test-symbol com.squareup.macrobenchmark.retail.RetailCheckoutBenchmarks --skip-install -ia endpoint=production unitToPair=Benchmarks engine=retail"
+
+# Lock the X2b CPU clock speeds
+function lockClock {
+  adb push /Users/mhiew/Downloads/qcs5430_disable_therm_force_perf.sh /data/local/tmp
+  adb root
+  adb shell "chmod +x /data/local/tmp/qcs5430_disable_therm_force_perf.sh"
+  adb shell "/data/local/tmp/qcs5430_disable_therm_force_perf.sh"
+}
+
+# convenience for profiler arguments
+alias quickProfile="profiler --skip-install"
+
+## Switching endpoints
+alias mswitchProd="adb root && adb shell setprop persist.square.apps.api_endpoint production && sleep 5 && adb reboot"
+alias mswitchStaging="adb root && adb shell setprop persist.square.apps.api_endpoint staging && sleep 5 && adb reboot"
+alias mcheckEndpoint="adb root && adb shell getprop persist.square.apps.api_endpoint"
+alias mclearEndpoint="./scripts/register_cli signout com.squareup.signin && sleep 5 && adb shell pm clear com.squareup.signin && adb shell pm clear com.squareup && adb shell am start com.squareup.signin"
+
+
+# DEMO
+alias msetupdemo="sq setupIdeModules --minimal :common:data-export :common:data-migration :common:data-archive"
+alias minstalldemo="./gradlew :common:data-migration:demo:installDebug"
+alias mbuilddemo="./gradlew :common:data-migration:demo:assembleDebug"
+alias launchdemo="adb shell monkey -p com.squareup.data.migration.demo 1"
+alias stopdemo="adb shell am force-stop com.squareup.data.migration.demo"
+alias launchretail="adb shell monkey -p com.squareup.retail 1"
+alias launchapos="adb shell monkey -p com.squareup.apos 1"
+alias launchrst="adb shell monkey -p com.squareup.restaurants 1"
+alias stopsuperpos="adb shell am force-stop com.squareup"
+alias launchsuperpos="adb shell monkey -p com.squareup 1"
+alias launchapos="adb shell monkey -p com.squareup.apos 1"
+alias stopapos="adb shell am force-stop com.squareup.apos"
+
+# SUPERPOS
+alias msetuptemp="./setupIdeModules --minimal :common:bootstrap-hairball"
+alias msetup="sq setupIdeModules :common:data-migration :common:data-archive :common:app-engine-namespacing :common:data-migration-analytics :retail:home-applet :features:visual-browse :tooling:cyborgs :apps:spos:app"
+alias minstall="./gradlew :apps:x2-superpos:app:installDebug -Psquare.superpos=spos,retail,restaurants"
+alias minstallinvoices="./gradlew :apps:x2-superpos:app:installDebug -Psquare.superpos=spos,invoices"
+alias mbuild="./gradlew :apps:x2-superpos:app:assembleDebug -Psquare.superpos=spos,retail"
+alias minstallall="./gradlew :apps:x2-superpos:app:installDebug -Psquare.superpos=spos,retail,appointments,restaurants"
+alias mbuildall="./gradlew :apps:x2-superpos:app:assembleDebug -Psquare.superpos=spos,retail,appointments,restaurants --full-stacktrace --continue"
+alias minstallAllrelease="./gradlew :apps:x2-superpos:app:installRelease -Psquare.superpos=spos,retail,appointments,restaurants -PengBuild=false"
+alias x2RetailRelease="./gradlew :apps:x2-retail:app:assembleRelease -PengBuild=false"
+alias x2RstRelease="./gradlew :apps:x2-restaurants:app:assembleRelease -PengBuild=false"
+alias x2AposRelease="./gradlew :apps:x2-appointments:app:assembleRelease -PengBuild=false"
+
+alias t2Superpos="./gradlew :apps:t2-superpos:app:assembleRelease -Psquare.superpos=spos,retail,appointments,restaurants,terminal-api -PengBuild=false"
+alias t2SuperposDebug="./gradlew :apps:t2-superpos:app:assembleDebug -Psquare.superpos=spos,retail,appointments,restaurants,terminal-api"
+alias t2SuperposDebugInstall="./gradlew :apps:t2-superpos:app:installDebug -Psquare.superpos=spos,retail,appointments,restaurants,terminal-api"
+alias t2RetailRelease="./gradlew :apps:t2-retail:app:assembleRelease -PengBuild=false"
+alias t2RetailDebugInstall="./gradlew :apps:t2-retail:app:installDebug"
+alias t2RstRelease="./gradlew :apps:t2-restaurants:app:assembleRelease -PengBuild=false"
+alias t2AposRelease="./gradlew :apps:t2-appointments:app:assembleRelease -PengBuild=false"
+alias t2TapiRelease="./gradlew :apps:t2-terminal-api:app:assembleRelease -PengBuild=false"
+
+alias minstallallcots="./gradlew :apps:spos:app:installDebug -Psquare.superpos=spos,retail,appointments,restaurants"
+alias enableRetailSquidFF="adb shell ff set-override ENABLE_RTL_SUPERPOS true"
+alias disableRetailSquidFF="adb shell ff set-override ENABLE_RTL_SUPERPOS false"
+alias enableAposSquidFF="adb shell ff set-override ENABLE_APOS_SUPERPOS true"
+alias disableAposSquidFF="adb shell ff set-override ENABLE_APOS_SUPERPOS false"
+alias enableRstSquidFF="adb shell ff set-override ENABLE_RST_SUPERPOS true"
+alias disableRstSquidFF="adb shell ff set-override ENABLE_RST_SUPERPOS false"
+alias enableTapiSquidFF="adb shell ff set-override ENABLE_TAPI_SUPERPOS true"
+alias disableTapiSquidFF="adb shell ff set-override ENABLE_TAPI_SUPERPOS false"
+alias enableM1BypassSingin="adb shell ff set-override SUPERPOS_BYPASS_SIGNIN_APP_MIN_VERSION 6.46"
+alias disableM1BypassSingin="adb shell ff set-override SUPERPOS_BYPASS_SIGNIN_APP_MIN_VERSION 100"
+
+alias displaySquidFF="adb shell ff dump"
+alias setSuperPosMinVersionSquidFF="adb shell ff set-override SUPERPOS_MIN_VERSION 70000000"
+alias removeSuperPosMinVersionSquidFF="adb shell ff remove-override SUPERPOS_MIN_VERSION"
+alias setSuperPosMigrationMinVersionSquidFF="adb shell ff set-override SUPERPOS_MIGRATION_MIN_VERSION 70000000"
+alias removeSuperPosMigrationMinVersionSquidFF="adb shell ff remove-override SUPERPOS_MIGRATION_MIN_VERSION"
+alias rebootAdb="adb reboot; echo waiting-for-adb; adb wait-for-device; echo device online; sleep 2; listenForMigration; echo adb logcat disconnected trying again.; adb wait-for-device; sleep 2; listenForMigration"
+alias listenForMigration="adb logcat -v color raw | grep -i -e RealPosLauncher -e 'Data Migration - Version incompatible' -e 'Data Migration - Failed for' -e 'Data Migration - Finished' -e 'Data Migration - Migration Required' -e 'Data Migration - No Migrations' -e '&&MIN' -e 'Crashed during Bootstrapping' -e 'BootstrapVersionManager' -e 'SuperPosVersionRollback' -e 'Killing process after migration' -e 'Skipping Data migration' -e 'Calculating if' -e 'Initial AppBootstrapState:' -e 'Marking migration successful' -e 'hibernation' -e 'VposMigrationUploadTracker' -e 'VposMigrationSuccessTracker' -e 'The App has updated ' -e 'The OS has updated' -e 'redirecting intent' -e 'redirecting to vpos' -e 'rollng back appengines' -e 'terminal card reader' -e 'because migration is bypassed' -e 'superPosDataMigrationCompleteDiskCache' -e 'Abandoning Data-Migration' -e 'initializing state without a selected engine' -e 'No engine stored and none was passed in from the launch intent'"
+
+alias listSuperPosFF="adb shell ff dump | grep -i superpos -A1 | tail +11"
+alias disableDex2Oat="adb root; adb shell setprop pm.dexopt.bg-dexopt assume-verified; adb shell setprop pm.dexopt.install assume-verified; adb shell setprop pm.dexopt.boot assume-verified; adb shell ff set-override DEXOPT_BACKGROUND_FILTER_LEVEL assume-verified; adb shell ff set-override DEXOPT_INSTALL_FILTER_LEVEL assume-verified;"
+
+## We can insert from adb without manually typing it in. This is useful for device code
+# adb shell input text WMDEH96YP6J1
+
+
+# SUPERPOS - Change Verticals
+alias mspos="adb shell am broadcast -p com.squareup -a com.squareup.superpos.VERTICAL_SELECTION -e vertical spos"
+alias mspos="adb shell am broadcast -p com.squareup -a com.squareup.superpos.VERTICAL_SELECTION -e vertical spos"
+alias mretail="adb shell am broadcast -p com.squareup -a com.squareup.superpos.VERTICAL_SELECTION -e vertical retail"
+alias mapos="adb shell am broadcast -p com.squareup -a com.squareup.superpos.VERTICAL_SELECTION -e vertical appointments"
+alias mrest="adb shell am broadcast -p com.squareup -a com.squareup.superpos.VERTICAL_SELECTION -e vertical restaurants"
+alias mfront="adb shell am start -n com.squareup/com.squareup.ui.PaymentActivity"
+alias mfrontretail="adb shell am start -n com.squareup.retail/com.squareup.ui.PaymentActivity"
+
+# toggle touch overlay
+alias mshowtouch="adb shell settings put system show_touches 1"
+alias mhidetouch="adb shell settings put system show_touches 0"
+
+# just compile the app without installing
+alias mbuildbak="./gradlew :apps:x2-retail:app:assembleDebug"
+
+# launc the app from cli for any connected emulators
+alias mrun="adb shell am start -n com.squareup.retail/com.squareup.ui.PaymentActivity"
+
+# ktlints only changes I've made using the gradlew-changed.sh script
+alias mlint="./scripts/gradlew-changed.sh -c ktlint"
+
+# autoformat only files I've changed 
+alias mformat="./scripts/gradlew-changed.rb ktlintformat"
+
+# only test files I've changed
+alias mtest="./scripts/gradlew-changed.rb -c test"
+
+alias mcheck="./scripts/gradlew-changed.rb -c ktlintformat test ktlint checkstyle detekt validateModuleStructure fixDependencies"
+alias mcheckFailed="./scripts/gradlew-changed.rb ktlintformat test ktlint checkstyle detekt | grep -v 'PASSED'"
+alias mvalidate="./scripts/gradlew-changed.rb validateModuleStructure"
+alias mScreenshot="./scripts/gradlew-changed.rb verifyPaparazziDebug -Psquare.runPaparazzi=true"
+alias mdependencies="./gradlew buildHealth --full-stacktrace --continue -PengBuild\=true -Pdependency.analysis.print.build.health\=true -Pdependency.analysis.project.includes\=\^\(\(\?\!:common:\)\).\*\$"
+
+# test helpers
+alias mtestall="./gradlew :retail:home-applet:internal:testDebugUnitTest"
+alias muitest="./gradlew :apps:x2-retail:app:uiTest --both"
+
+# free memory
+alias mfreemem="/Users/mhiew/Development/android-register/scripts/release-memory.sh"
+# stop gradle
+alias mgradlestop="./gradlew --stop"
+
+# open debug drawer
+alias mdebugdrawer="echo \"make sure you ran adb root\"; adb shell am broadcast -a \"com.squareup\" -a \"com.squareup.development.drawer.TOGGLE_DRAWER\""
+
+# launch emulators
+#
+#alias hodor="$ANDROID_HOME/emulator/emulator -avd Hodor_API_29"
+#alias bran="$ANDROID_HOME/emulator/emulator -avd Bran_API_29"
+#alias x2="hodor &; bran &;"
+
+# generates feature flags from protos
+alias mfeatureflaggen="gwp common/services-data generateProtos"
+
+# load the aliases in config_files files (optional)
+source ~/Development/config_files/square/aliases
+
+[[ -f "$HOME/.aliases" ]] && source "$HOME/.aliases"
+[[ -f "$HOME/.localaliases" ]] && source "$HOME/.localaliases"
+
+# Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
+# Added by sa-tools
+function bran() { local VAR=$(adb devices -l | grep bran | cut -d " " -f 1 | sed '1q;d') ; ANDROID_SERIAL=$VAR "$@" ; }
+function hodor() { local VAR=$(adb devices -l | grep hodor | cut -d " " -f 1 | sed '1q;d') ; ANDROID_SERIAL=$VAR "$@" ; }
+
+# Added by min - adb
+export PATH=$ANDROID_HOME/platform-tools:$PATH
+export PATH=$ANDROID_HOME/tools/bin:$PATH
+export PATH=$ANDROID_HOME/emulator:$PATH
+export PATH=$ANDROID_HOME/ndk-bundle:$PATH
+
+# Added by min - for squid scripts within /scripts/squid
+export SQUID_PLATFORM=sdm660_64
+
+## Duplicate resources
+alias t2dup="./gradlew :apps:t2-retail:app:duplicateResourcesDebug"
+alias x2dup="./gradlew :apps:x2-retail:app:duplicateResourcesDebug"
+alias x2retailsuper="./gradlew :apps:x2-superpos:app:installDebug -Psquare.superpos=spos,retail"
+
+
+## Added by Min for iOS Stuff
+alias mbuildIOS="./Scripts/BazelLocal/generate_xcode_project_with_bazel.rb --generator rules_xcodeproj Retail"
+alias minstallIOS="./Scripts/BazelLocal/generate_xcode_project_with_bazel.rb Retail -d retail"
+alias gen-project='be ~/Development/ios-register/Scripts/BazelLocal/generate_xcode_project_with_bazel.rb'
+alias gen-project-retail-device='gen-project Retail --name Retail-device -d retail'
+
+function bazgen() {
+  if (( $# == 0 ))
+    then
+      echo "${RED}ERROR${NC}: You must provide a project name!"
+      return 1
+  fi
+  echo "Generating project for $1..."
+  gen-project $1 --name $1
+}
+
+# Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
+export PATH="$PATH:$HOME/.rvm/bin"
+export JAVA_HOME="/Users/mhiew/Library/Java/JavaVirtualMachines/azul-17-ARM64/Contents/Home"
+export SA_TOOLBOX_JAVA_HOME="/Users/mhiew/Library/Java/JavaVirtualMachines/azul-17-ARM64/Contents/Home"
+export STUDIO_GRADLE_JDK="/Users/mhiew/Library/Java/JavaVirtualMachines/azul-17-ARM64/Contents/Home"
+
+export ANDROID_HOME="/Users/mhiew/Library/Android/sdk"
+export ANDROID_SDK_ROOT="$ANDROID_HOME"
+export ANDROID_NDK="$ANDROID_HOME/ndk/28.0.13004108"
+export PATH="$PATH:$ANDROID_HOME/cmdline-tools/latest/bin"
+export PATH="$PATH:$ANDROID_HOME/tools/bin"
+export PATH="$PATH:$ANDROID_HOME/platform-tools"
+
+### The lines in this section are added automatically by salt. Do not modify. ###
+#Default shell configs
+######
+function t2() { local VAR=$(adb devices -l | grep t2 | cut -d " " -f 1 | sed '1q;d') ; ANDROID_SERIAL=$VAR "$@" ; }
+ 
+export PIP_CONFIG_FILE=~/.config/pip/pip.conf
+ 
+# Adding libexec/bin to path
+export PATH=$PATH:/opt/homebrew/opt/python@3/libexec/bin
+export NODE_EXTRA_CA_CERTS=/opt/homebrew/etc/ca-certificates/cert.pem
+export COREPACK_NPM_REGISTRY=https://artifactory.global.square/artifactory/api/npm/square-npm/
+export COREPACK_INTEGRITY_KEYS=0
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh" # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && . "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+#profiler
+[[ -f $HOME/Development/android-register/scripts/profiler/source-autocomplete.sh ]] && source $HOME/Development/android-register/scripts/profiler/source-autocomplete.sh
+
+# Tmux
+alias ta="tmux attach -t main"
+
+# to be able to use ~/android-register/scripts/simpleperf-helper.main.kts 
+#source /Users/mhiew/Development/android-register/scripts/android-sdk-setup.sh

@@ -40,7 +40,7 @@ setopt HIST_FIND_NO_DUPS
 setopt SHARE_HISTORY
 
 # hide macbook and username from prompt
-PS1="%1d$ "
+#PS1="%1d$
 
 # automatically show extended options and the last 30 items
 alias history="history -E -30"
