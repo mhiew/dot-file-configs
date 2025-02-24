@@ -65,3 +65,6 @@ map <leader>h <Action>(PrevSplitter)
 " Errors
 nmap <leader>x <Action>(GotoNextError)
 nmap <leader>X <Action>(GotoPreviousError)
+
+" Toggle tool windows
+nmap <leader>z <Action>(HideAllWindows)
