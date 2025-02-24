@@ -1,5 +1,4 @@
 " PLUGINS
-
 " ======================================== 
 " autoload PLUG plugin manager
 if empty(glob('~/.vim/autoload/plug.vim'))
@@ -180,6 +179,10 @@ nnoremap ` '
 
 " paste without losing the buffer
 xnoremap <leader>p "_dP
+            
+" delete without losing the buffer
+vnoremap <leader>d "_d
+nnoremap <leader>d "_d
 
 " Set syntax highlighting for fastlane files
 au BufNewFile,BufRead Fastfile set filetype=ruby
