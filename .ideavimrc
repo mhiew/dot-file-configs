@@ -16,6 +16,11 @@ map s <nop>
 set visualbell
 set noerrorbells
 
+" Turn off numbers and relative line numbers so that intellij can handle it
+" I install the relative line number plugin so that both are visible and these
+" settings from vimrc conflict.
+:set norelativenumber
+
 " Easy Motion
 "set easymotion
 
