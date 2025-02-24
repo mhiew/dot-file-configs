@@ -12,6 +12,10 @@ set surround
 " Disable s
 map s <nop>
 
+" Disable beeps
+set visualbell
+set noerrorbells
+
 " Easy Motion
 "set easymotion
 
