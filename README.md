@@ -13,7 +13,8 @@ A place to drop some tools preferences and configurations for ease of sharing be
 
 ## initial setup
 - source the `.zshrc` ie. `source $HOME/Developer/Program-Tool-Configurations/.zshrc`
-- source the `.vimrc` ie. `source $HOME/Developer/Program-Tool-Configurations/.vimrc`
+- source the `.vimrc` ie. `source /Users/minhiew/Developer/Program-Tool-Configurations/.vimrc`. 
+    - note use absolute path for `.vimrc` otherwise `.ideavimrc` wont be able to locate it as it doesn't understand path expansion
 - source the `.ideavimrc` ie. `source $HOME/Developer/Program-Tool-Configurations/.ideavimrc`
 
 ## tmux setup
