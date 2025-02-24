@@ -22,7 +22,7 @@ Plug 'https://github.com/tpope/vim-surround'
 Plug 'dracula/vim'
 
 " easy motion
-Plug 'easymotion/vim-easymotion'
+"Plug 'easymotion/vim-easymotion'
 
 " Initialize plugin system
 call plug#end()
@@ -178,24 +178,24 @@ au BufNewFile,BufRead Fastfile set filetype=ruby
 " ========================================
 
 " Easy Motion Configs
-let g:EasyMotion_do_mapping = 0 " Disable default mappings
+"let g:EasyMotion_do_mapping = 0 " Disable default mappings
 
 " Turn on case-insensitive feature
-let g:EasyMotion_smartcase = 1
+"let g:EasyMotion_smartcase = 1
 
 " Jump to anywhere you want with minimal keystrokes, with just one key binding.
-map <leader>f <Plug>(easymotion-bd-f)
+"map <leader>f <Plug>(easymotion-bd-f)
 
 " Word motions are quite convenient
-map <leader>w <Plug>(easymotion-bd-w)
-map <leader>b <Plug>(easymotion-bd-e)
+"map <leader>w <Plug>(easymotion-bd-w)
+"map <leader>b <Plug>(easymotion-bd-e)
 
 " JK motions: Line motions
-map <leader>j <Plug>(easymotion-bd-jk)
-map <leader>k <Plug>(easymotion-bd-jk)
+"map <leader>j <Plug>(easymotion-bd-jk)
+"map <leader>k <Plug>(easymotion-bd-jk)
 
 " repeat last easy motion search
-map <leader>. <Plug>(easymotion-repeat)
+"map <leader>. <Plug>(easymotion-repeat)
 
 " used after searching to jump to specific result
-map <leader>n <Plug>(easymotion-bd-n)
+"map <leader>n <Plug>(easymotion-bd-n)

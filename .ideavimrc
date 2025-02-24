@@ -13,35 +13,35 @@ set surround
 map s <nop>
 
 " Easy Motion
-set easymotion
+"set easymotion
 
 " Easy Motion Configs
 
 " Disable AceJump so there are no conflicts with IdeaVimEasymotion
-let g:EasyMotion_override_acejump = 0
+"let g:EasyMotion_override_acejump = 0
 
 " Disable default mappings
-let g:EasyMotion_do_mapping = 0 
+"et g:EasyMotion_do_mapping = 0 
 
 " Turn on case-insensitive feature
-let g:EasyMotion_smartcase = 1
+"et g:EasyMotion_smartcase = 1
 
 " only have to type leader once instead of having to type it twice
-map <leader> <Plug>(easymotion-prefix)
+"map <leader> <Plug>(easymotion-prefix)
 
 " Jump to anywhere you want with minimal keystrokes, with just one key binding.
-map <leader>f <Plug>(easymotion-bd-f)
+"map <leader>f <Plug>(easymotion-bd-f)
 
 " Word motions are quite convenient
-map <leader>w <Plug>(easymotion-bd-w)
-map <leader>b <Plug>(easymotion-bd-e)
+"map <leader>w <Plug>(easymotion-bd-w)
+"map <leader>b <Plug>(easymotion-bd-e)
 
 " JK motions: Line motions
-map <leader>j <Plug>(easymotion-bd-jk)
-map <leader>k <Plug>(easymotion-bd-jk)
+"map <leader>j <Plug>(easymotion-bd-jk)
+"map <leader>k <Plug>(easymotion-bd-jk)
 
 " used after searching to jump to specific result
-map <leader>n <Plug>(easymotion-bd-n)
+"map <leader>n <Plug>(easymotion-bd-n)
 
 " shortcut for SelectProjectInView
 map <leader>b <Action>(SelectInProjectView)
