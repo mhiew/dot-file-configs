@@ -68,3 +68,10 @@ nmap <leader>X <Action>(GotoPreviousError)
 
 " Toggle tool windows
 nmap <leader>z <Action>(HideAllWindows)
+
+" Switch betwen tabs same as in tmux
+nmap <C-a>h <Action>(PreviousTab)
+nmap <C-a><C-h> <Action>(PreviousTab)
+
+nmap <C-a>l <Action>(NextTab)
+nmap <C-a><C-l> <Action>(NextTab)
