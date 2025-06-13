@@ -20,6 +20,8 @@ source ~/Development/config_files/square/aliases
 [[ -f "$HOME/.aliases" ]] && source "$HOME/.aliases"
 [[ -f "$HOME/.localaliases" ]] && source "$HOME/.localaliases"
 
+# my regular zshrc configs
+source $HOME/Development/Program-Tool-Configurations/.zshrc
 
 # Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
 export PATH="$PATH:$HOME/.rvm/bin"
@@ -30,56 +32,30 @@ export STUDIO_GRADLE_JDK="/Users/mhiew/Library/Java/JavaVirtualMachines/azul-17-
 function bran() { local VAR=$(adb devices -l | grep bran | cut -d " " -f 1 | sed '1q;d') ; ANDROID_SERIAL=$VAR "$@" ; }
 function hodor() { local VAR=$(adb devices -l | grep hodor | cut -d " " -f 1 | sed '1q;d') ; ANDROID_SERIAL=$VAR "$@" ; }
 
+# Android View Client for Dump
+export ANDROID_VIEW_CLIENT_HOME="/Users/mhiew/Development/AndroidViewClient"
+
 # opt out of automatic setupIdeModules git hook https://square.slack.com/archives/C02GDC2JP/p1704741274803199
 export DISABLE_SETUPIDEMODULES_HOOK=1
+
 
 #case insensitive autocomplete
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
 
-
-# Enable ctrl-v to edit commandline
-autoload -Uz edit-command-line
-zle -N edit-command-line
-bindkey '^v' edit-command-line
-
-### zsh changes for history
-# increase history size
-HISTFILE=~/.zsh_history
-HISTSIZE=999999999
-SAVEHIST=$HISTSIZE
-HISTDUP=erase
-
-# automatically append to history file instead of on shell exit
-setopt INC_APPEND_HISTORY
-export HISTTIMEFORMAT="[%F %T] "
-
-# add timestamps for history
-setopt EXTENDED_HISTORY
-
-# remove duplicates
-setopt HIST_FIND_NO_DUPS
-setopt HIST_IGNORE_ALL_DUPS
-setopt HIST_SAVE_NO_DUPS
-setopt HIST_IGNORE_DUPS
-setopt HIST_FIND_NO_DUPS
-
-# share history between tabs
-setopt SHARE_HISTORY
 
 # automatically show extended options and the last 30 items
 alias history="history -E -30"
 alias allhistory="history -9999999"
 
 ###
+
+# Turn this off as it slows down git
+SKIP_GIT_CI_CHECKS=1
+SKIP_PREPUSH_CHECKS=1
+
 # gradlew
 alias gw="./gradlew"
 alias gwp="./gradlew -p" #allows autocompletion
-
-# reloads our shell with latest zshrc changes
-alias mshell="source ~/.zshrc"
-
-# reloads compost mobile
-alias mcompost="cd ~/Development/topsoil; ./compost mobile"
 
 # traversal to our android repo
 alias mretail="cd /Users/mhiew/Development/android-register"
@@ -103,21 +79,18 @@ alias disableWifi="adb shell svc wifi disable"
 # use this like skip git push -u
 alias skip="SKIP_PREPUSH_CHECKS=1"
 
-# compiling and installing the x2 retail app for connected adb devices
-alias minstallbak="./gradlew :apps:x2-retail:app:installDebug"
-alias minstallretail="./gradlew :apps:x2-retail:app:installDebug"
-alias minstallretailRelease="./gradlew :apps:x2-retail:app:installRelease PengBuild=false"
-alias minstallspos="./gradlew :apps:x2-spos:app:installDebug"
-alias minstallapos="./gradlew :apps:x2-appointments:app:installDebug"
-alias minstallrst="./gradlew :apps:x2-restaurants:app:installDebug"
-alias minstallRelease="./gradlew :apps:x2-retail:app:installRelease -PengBuild=false" #we need -PengBuild to see the installRelease task
-alias mprofile="./gradlew :apps:x2-retail:app:installRelease -Psquare.enableProfiling=true -PengBuild=false"
-alias minstallbran="bran ./gradlew :apps:x2-bran:app:installDebug"
-alias minstallstatusbar="./gradlew :apps:squid-statusbar:app:installDebug"
-alias minstallT2="./gradlew :apps:t2-superpos:app:installDebug -Psquare.superpos=spos,terminal-api"
-alias minstallTerminalApi="./gradlew :apps:t2-terminal-api:app:installDebug"
-alias mbuildbran="./gradlew :apps:x2-bran:app:assembleDebug"
-alias minstallsignin="./gradlew :apps:sign-in:app:installDebug"
+## setupIde Modules
+function mrefresh {
+    pushd "$HOME/Development/android-register"
+
+    echo "refreshing sandbags"
+    ./use-sandbags.rb --sync-artifacts
+
+    echo "refreshing setupIdeModules"
+    ./setupIdeModules --refresh
+
+    popd
+}
 
 ## Profiling
 alias minstallprofile="./gradlew :apps:x2-superpos:app:installRelease -Psquare.enableProfiling=true -PengBuild=false"
@@ -127,33 +100,25 @@ alias minstallprofilecotsr8="./gradlew :apps:spos:app:installRelease -Psquare.en
 alias mbuildprofilecots="./gradlew :apps:spos:app:assembleRelease -Psquare.enableProfiling=true -PengBuild=false -Psquare.superpos=spos,retail"
 alias mbuildprofilecotsdebug="./gradlew :apps:spos:app:assembleDebug -Psquare.enableProfiling=true -Psquare.superpos=spos,retail"
 alias mbuildprofile="./gradlew :apps:x2-superpos:app:assembleRelease -Psquare.enableProfiling=true -PengBuild=false"
-alias mbuildprofileRetail="./gradlew :apps:x2-superpos:app:assembleRelease -Psquare.enableProfiling=true -PengBuild=false -Psquare.superpos=spos,retail"
-alias minstallprofileRetail="./gradlew :apps:x2-superpos:app:installRelease -Psquare.enableProfiling=true -PengBuild=false -Psquare.superpos=spos,retail"
+alias mbuildprofileRetail="./gradlew :apps:x2-superpos:app:assembleRelease -Psquare.enableProfiling=true -PengBuild=false -Psquare.superpos=spos,retail,restaurants"
+alias minstallprofileRetail="./gradlew :apps:x2-superpos:app:installRelease -Psquare.enableProfiling=true -PengBuild=false -Psquare.superpos=spos,retail,restaurants"
 alias mbuildReleaseTest="./gradlew :apps:x2-superpos:app:assembleRelease -Psquare.enableProfiling=true -Psquare.debuggable=true -Psquare.superpos=spos,retail -PengBuild=false"
 alias mbuildprofiledebug="./gradlew :apps:x2-superpos:app:assembleDebug -Psquare.enableProfiling=true"
-alias mspeedcompile="adb root && adb shell cmd package compile -f -m speed com.squareup && adb shell am force-stop com.squareup"
+alias mspeedcompile="adb root && adb shell cmd package compile -f -m speed com.squareup && adb shell cmd package bg-dexopt-job && adb shell am force-stop com.squareup"
 alias mspeedcompilecotsdebug="adb root && adb shell cmd package compile -f -m speed com.squareup.eng && adb shell am force-stop com.squareup.eng"
 alias mcheckcompilation="adb shell dumpsys package dexopt | grep -A 2 com.squareup\]"
 alias mdisabletelemetry="adb root && adb disable-verity && adb reboot && adb wait-for-device root && adb remount && adb shell rm -rf /system/app/Telemetry && adb reboot"
 #alias recordPerfetto="profiler --open-result-in-browser --skip-install --perfetto-options '-c $HOME/Development/android-register/scripts/profiler/perfetto-config.pbtx'"
 alias recordPerfettoCotsLocal="/Users/mhiew/Development/android-register/scripts/profiler/record-compose-trace.sh"
+alias recordPerfetto="$HOME/Development/android-register/scripts/profiler/record-compose-trace.sh"
 
 # compose layout inspect
 alias enableLayoutInspector="adb shell settings put global debug_view_attributes 1"
 alias disableLayoutInspector="adb shell settings delete global debug_view_attributes"
 
-# Record a perfetto trace
-# takes an optional parameter for the save file name
-function recordPerfetto {
-  local traceFileName="${1:-trace_file}"
-  local outputSaveFile="${traceFileName}.perfetto-trace"
-
-  adb shell setprop persist.traced.enable 1
-
-  #./record_android_trace -o $outputSaveFile -c ./scripts/profiler/perfetto-config.pbtx
-  profiler --open-result-in-browser --skip-install --perfetto-file-name $outputSaveFile --perfetto-options "-c $HOME/Development/android-register/scripts/profiler/perfetto-config.pbtx"
-}
-
+# connect to physical devices
+alias connectt2="adb connect 192.168.4.209"
+alias connectx2="adb connect 192.168.4.189"
 
 # Runs the perfetto analysis script on a trace file 
 function analyzePerfetto {
@@ -171,7 +136,7 @@ function recordSimplePerf {
   local directoryName="${1:-simpleperf}"
   local currentDateTime=$(date +'%Y.%m.%d.%H.%M.%S')
   local outputDirectory="${directoryName}_${currentDateTime}"
-  local fullOutputDirectory="/Users/mhiew/Desktop/$outputDirectory"
+  local fullOutputDirectory="$HOME/Desktop/$outputDirectory"
   echo "Saving simplePerf recording at $fullOutputDirectory" 
 
   mkdir $fullOutputDirectory
@@ -181,13 +146,14 @@ function recordSimplePerf {
   open "https://profiler.firefox.com"
 
   echo "Opening $fullOutputDirectory"
+  open $fullOutputDirectory
 }
 
 # Benchmark
 alias installBenchmarkApp="./gradlew :tooling:macro-benchmark:installDebugAndroidTest"
-alias benchmarkCheckout="adb -s 192.168.4.189:5555 shell am instrument -w -e class 'com.squareup.macrobenchmark.retail.RetailCheckoutBenchmarks#showPaymentMethodScreen' -e iterations 50 -e appUnderTest com.squareup -e engine retail -e runner mhiew -e androidx.benchmark.suppressErrors LOW-BATTERY,DEBUGGABLE -e androidx.benchmark.compilation.enabled false -e disableAnalytics true -e endpoint production -e engine retail -e unitToPair Benchmarks -e additionalTestOutputDir /sdcard/Android/media/com.squareup.macrobenchmark.test/additional_test_output com.squareup.macrobenchmark.test/androidx.test.runner.AndroidJUnitRunner"
+alias benchmarkCheckout="adb -s 192.168.4.189:5555 shell am instrument -w -e class 'com.squareup.macrobenchmark.retail.RetailCheckoutBenchmarks#showPaymentMethodScreen' -e iterations 5 -e appUnderTest com.squareup -e engine retail -e runner mhiew -e androidx.benchmark.suppressErrors LOW-BATTERY,DEBUGGABLE -e androidx.benchmark.compilation.enabled false -e disableAnalytics true -e endpoint production -e engine retail -e unitToPair Benchmarks -e additionalTestOutputDir /sdcard/Android/media/com.squareup.macrobenchmark.test/additional_test_output com.squareup.macrobenchmark.test/androidx.test.runner.AndroidJUnitRunner"
 alias recordBenchMark="benchmark --test-symbol com.squareup.macrobenchmark.retail.RetailLoadVisualBrowseBenchmarks --skip-install -ia endpoint=production unitToPair=Benchmarks engine=retail"
-alias recordBenchMarkCheckout="benchmark --test-symbol com.squareup.macrobenchmark.retail.RetailCheckoutBenchmarks --skip-install -ia endpoint=production unitToPair=Benchmarks engine=retail"
+alias recordBenchMarkCheckout="benchmark --test-symbol com.squareup.macrobenchmark.retail.RetailCheckoutBenchmarks --skip-install-pos-app -ia endpoint=production unitToPair=Benchmarks engine=retail"
 
 # Lock the X2b CPU clock speeds
 function lockClock {
@@ -223,10 +189,11 @@ alias stopapos="adb shell am force-stop com.squareup.apos"
 
 # SUPERPOS
 alias msetuptemp="./setupIdeModules --minimal :common:bootstrap-hairball"
-alias msetup="sq setupIdeModules :common:data-migration :common:data-archive :common:app-engine-namespacing :common:data-migration-analytics :retail:home-applet :features:visual-browse :tooling:cyborgs :apps:spos:app"
-alias minstall="./gradlew :apps:x2-superpos:app:installDebug -Psquare.superpos=spos,retail,restaurants"
+alias msetupRST="sq setupIdeModules :restaurants:common :restaurants:features :restaurants:settings-applet :common:applet :common:applet-navigation :tooling:cyborgs" 
+alias msetup="sq setupIdeModules :common:app-engine-namespacing :retail:home-applet :features:visual-browse" 
+alias minstall="./gradlew :apps:x2-superpos:app:installDebug -Psquare.superpos=spos,restaurants"
 alias minstallinvoices="./gradlew :apps:x2-superpos:app:installDebug -Psquare.superpos=spos,invoices"
-alias mbuild="./gradlew :apps:x2-superpos:app:assembleDebug -Psquare.superpos=spos,retail"
+alias mbuild="./gradlew :apps:x2-superpos:app:assembleDebug -Psquare.superpos=spos,restaurants"
 alias minstallall="./gradlew :apps:x2-superpos:app:installDebug -Psquare.superpos=spos,retail,appointments,restaurants"
 alias mbuildall="./gradlew :apps:x2-superpos:app:assembleDebug -Psquare.superpos=spos,retail,appointments,restaurants --full-stacktrace --continue"
 alias minstallAllrelease="./gradlew :apps:x2-superpos:app:installRelease -Psquare.superpos=spos,retail,appointments,restaurants -PengBuild=false"
@@ -236,6 +203,7 @@ alias x2AposRelease="./gradlew :apps:x2-appointments:app:assembleRelease -PengBu
 
 alias t2Superpos="./gradlew :apps:t2-superpos:app:assembleRelease -Psquare.superpos=spos,retail,appointments,restaurants,terminal-api -PengBuild=false"
 alias t2SuperposDebug="./gradlew :apps:t2-superpos:app:assembleDebug -Psquare.superpos=spos,retail,appointments,restaurants,terminal-api"
+alias t2SuperposRst="./gradlew :apps:t2-superpos:app:installDebug -Psquare.superpos=spos,restaurants"
 alias t2SuperposDebugInstall="./gradlew :apps:t2-superpos:app:installDebug -Psquare.superpos=spos,retail,appointments,restaurants,terminal-api"
 alias t2RetailRelease="./gradlew :apps:t2-retail:app:assembleRelease -PengBuild=false"
 alias t2RetailDebugInstall="./gradlew :apps:t2-retail:app:installDebug"
@@ -283,10 +251,17 @@ alias mfrontretail="adb shell am start -n com.squareup.retail/com.squareup.ui.Pa
 alias mshowtouch="adb shell settings put system show_touches 1"
 alias mhidetouch="adb shell settings put system show_touches 0"
 
-# just compile the app without installing
-alias mbuildbak="./gradlew :apps:x2-retail:app:assembleDebug"
+# Echo - Clear potential firewall rules which can block echo from connecting. Used before selecting emulator in echo
+function resetEcho {
+    adb root
+    echo "resetting ip tables"
+    adb shell "iptables -F"
+    adb shell "iptables -P INPUT ACCEPT"
+    adb shell "iptables -P OUTPUT ACCEPT"
+}
 
-# launc the app from cli for any connected emulators
+
+# launch the app from cli for any connected emulators
 alias mrun="adb shell am start -n com.squareup.retail/com.squareup.ui.PaymentActivity"
 
 # ktlints only changes I've made using the gradlew-changed.sh script
@@ -342,6 +317,9 @@ export PATH=$ANDROID_HOME/tools/bin:$PATH
 export PATH=$ANDROID_HOME/emulator:$PATH
 export PATH=$ANDROID_HOME/ndk-bundle:$PATH
 
+# Goose
+export PATH="/Users/mhiew/.local/bin:$PATH"
+
 # Added by min - for squid scripts within /scripts/squid
 export SQUID_PLATFORM=sdm660_64
 
@@ -373,9 +351,8 @@ export JAVA_HOME="/Users/mhiew/Library/Java/JavaVirtualMachines/azul-17-ARM64/Co
 export SA_TOOLBOX_JAVA_HOME="/Users/mhiew/Library/Java/JavaVirtualMachines/azul-17-ARM64/Contents/Home"
 export STUDIO_GRADLE_JDK="/Users/mhiew/Library/Java/JavaVirtualMachines/azul-17-ARM64/Contents/Home"
 
-export ANDROID_HOME="/Users/mhiew/Library/Android/sdk"
 export ANDROID_SDK_ROOT="$ANDROID_HOME"
-export ANDROID_NDK="$ANDROID_HOME/ndk/28.0.13004108"
+#export ANDROID_NDK="$ANDROID_HOME/ndk/28.0.13004108"
 export PATH="$PATH:$ANDROID_HOME/cmdline-tools/latest/bin"
 export PATH="$PATH:$ANDROID_HOME/tools/bin"
 export PATH="$PATH:$ANDROID_HOME/platform-tools"
@@ -393,54 +370,15 @@ export NODE_EXTRA_CA_CERTS=/opt/homebrew/etc/ca-certificates/cert.pem
 export COREPACK_NPM_REGISTRY=https://artifactory.global.square/artifactory/api/npm/square-npm/
 export COREPACK_INTEGRITY_KEYS=0
 export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh" # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && . "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
 #profiler
 [[ -f $HOME/Development/android-register/scripts/profiler/source-autocomplete.sh ]] && source $HOME/Development/android-register/scripts/profiler/source-autocomplete.sh
 
-# git helpers (requires fzf)
-#fuzzy search over branches
-alias fsb='~/fsb.sh'
-#fuzzy search over commits
-alias fsc='~/fsc.sh'
-
-function git_ammend {
-    if [ -z "$1" ]; then
-        git commit --amend --no-edit;
-    else 
-        git commit --amend -m "$@";
-    fi;
-}
-
-#fzf configs
-# Setting fd as the default source for fzf
-export FZF_DEFAULT_COMMAND='fd --type f --strip-cwd-prefix'
-# To apply the command to CTRL-T as well
-export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
-
-export FZF_CTRL_T_OPTS="
-  --walker-skip .git,node_modules,target
-  --preview 'bat -n --color=always {}'
-  --bind 'ctrl-/:change-preview-window(down|hidden|)'"
-
-# CTRL-Y to copy the command into clipboard using pbcopy
-export FZF_CTRL_R_OPTS="
-  --bind 'ctrl-y:execute-silent(echo -n {2..} | pbcopy)+abort'
-  --color header:italic
-  --header 'Press CTRL-Y to copy command into clipboard'"
-
-export FZF_ALT_C_OPTS="
-  --walker-skip .git,node_modules,target
-  --preview 'tree -C {}'"
-
-# Shell integrations
-eval "$(fzf --zsh)"
-eval "$(zoxide init --cmd cd zsh)"
-
 # Tmux
 alias ta="tmux attach -t main"
-alias c="clear; tmux clear-history"
 
 # to be able to use ~/android-register/scripts/simpleperf-helper.main.kts 
 #source /Users/mhiew/Development/android-register/scripts/android-sdk-setup.sh
+export PIPX_DEFAULT_PYTHON=python3.10
+export ANDROID_HOME="/Users/mhiew/Library/Android/sdk"
