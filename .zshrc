@@ -81,6 +81,9 @@ alias lg1="git log --graph --abbrev-commit --decorate --format=format:'%C(bold b
 # faster git status but does not view untracked files
 alias gitfstatus="git status -uno"
 
+# ability to see git trace information
+alias gittrace="GIT_TRACE=1 GIT_TRACE_PERFORMANCE=1 git"
+
 # Shell integrations
 eval "$(fzf --zsh)"
 eval "$(zoxide init --cmd cd zsh)"
