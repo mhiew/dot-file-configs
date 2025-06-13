@@ -43,6 +43,7 @@ A place to drop some tools preferences and configurations for ease of sharing be
 
 ## Git 
 - use `git config --global --add --bool rebase.updateRefs true` [reference](https://andrewlock.net/working-with-stacked-branches-in-git-is-easier-with-update-refs/)
+- use `git config --global core.fsmonitor true` [reference](https://git-scm.com/docs/git-fsmonitor--daemon) 
 
 ## .zsrhc  Warnings
 `.zshrc` `vi` bindings seem to cause an lot of issues so I am going to avoid using it.
