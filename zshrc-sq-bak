@@ -1,4 +1,4 @@
-#######################################################
+######################################################
 # load Square specific zshrc; please don't change this bit.
 #######################################################
 source ~/Development/config_files/square/zshrc
@@ -260,6 +260,22 @@ function resetEcho {
     adb shell "iptables -P OUTPUT ACCEPT"
 }
 
+# Allow Crtpy to RPC to Device
+# https://square.slack.com/archives/CBT5UN1N3/p1635971223282900?thread_ts=1635967155.274500&cid=CBT5UN1N3
+function resetCrtpyRPC {
+    echo "resetting crtpy rpc"
+    adb root
+    adb shell "iptables -F && iptables -P INPUT ACCEPT && iptables -P OUTPUT ACCEPT"
+    adb shell setprop square.specommsd.interface ip
+    adb forward tcp:50016 tcp:50016
+}
+
+## Allows Flipper to connec
+function connectFlipper {
+    adb root
+    adb shell setenforce 0
+}
+
 
 # launch the app from cli for any connected emulators
 alias mrun="adb shell am start -n com.squareup.retail/com.squareup.ui.PaymentActivity"
@@ -328,6 +344,9 @@ alias t2dup="./gradlew :apps:t2-retail:app:duplicateResourcesDebug"
 alias x2dup="./gradlew :apps:x2-retail:app:duplicateResourcesDebug"
 alias x2retailsuper="./gradlew :apps:x2-superpos:app:installDebug -Psquare.superpos=spos,retail"
 
+## Bran Emulator Connections
+alias reconnectBran="./scripts/squid/forward.sh emulator-5562 --hodor emulator-5560"
+alias rebuildBran="ANDROID_SERIAL=emulator-5562 ./gradlew :apps:x2-bran:app:installDebug"
 
 ## Added by Min for iOS Stuff
 alias mbuildIOS="./Scripts/BazelLocal/generate_xcode_project_with_bazel.rb --generator rules_xcodeproj Retail"
@@ -366,9 +385,6 @@ export PIP_CONFIG_FILE=~/.config/pip/pip.conf
  
 # Adding libexec/bin to path
 export PATH=$PATH:/opt/homebrew/opt/python@3/libexec/bin
-export NODE_EXTRA_CA_CERTS=/opt/homebrew/etc/ca-certificates/cert.pem
-export COREPACK_NPM_REGISTRY=https://artifactory.global.square/artifactory/api/npm/square-npm/
-export COREPACK_INTEGRITY_KEYS=0
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/bash_completion" ] && . "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
@@ -382,3 +398,8 @@ alias ta="tmux attach -t main"
 #source /Users/mhiew/Development/android-register/scripts/android-sdk-setup.sh
 export PIPX_DEFAULT_PYTHON=python3.10
 export ANDROID_HOME="/Users/mhiew/Library/Android/sdk"
+export NODE_EXTRA_CA_CERTS=/opt/homebrew/etc/ca-certificates/cert.pem
+export COREPACK_NPM_REGISTRY=https://global.block-artifacts.com/artifactory/api/npm/square-npm/
+export COREPACK_INTEGRITY_KEYS=0
+alias brew-arm="/opt/homebrew/bin/brew"
+alias brew-x86="/usr/local/bin/brew"
