@@ -75,3 +75,12 @@ nmap <C-a><C-h> <Action>(PreviousTab)
 
 nmap <C-a>l <Action>(NextTab)
 nmap <C-a><C-l> <Action>(NextTab)
+
+" Jump between git changes up and down
+nmap <C-a>j <Action>(VcsShowNextChangeMarker)
+nmap <C-a><C-j> <Action>(VcsShowNextChangeMarker)
+nmap g; <Action>(VcsShowNextChangeMarker)
+
+nmap <C-a>k <Action>(VcsShowPrevChangeMarker)
+nmap <C-a><C-k> <Action>(VcsShowPrevChangeMarker)
+nmap g, <Action>(VcsShowPrevChangeMarker)
