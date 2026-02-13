@@ -114,7 +114,10 @@
   "Use Italic Font" : true,
   "Unlimited Scrollback" : false,
   "Keyboard Map" : {
-
+    "0xd-0x20000" : {
+      "Action" : 10,
+      "Text" : "[13;2u"
+    }
   },
   "Window Type" : 0,
   "Background Image Location" : "",
