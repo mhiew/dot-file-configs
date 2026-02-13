@@ -45,6 +45,10 @@ A place to drop some tools preferences and configurations for ease of sharing be
 - use `git config --global --add --bool rebase.updateRefs true` [reference](https://andrewlock.net/working-with-stacked-branches-in-git-is-easier-with-update-refs/)
 - use `git config --global core.fsmonitor true` [reference](https://git-scm.com/docs/git-fsmonitor--daemon) 
 
+## Claude Code CLI
+- Config files stored in `claude/`: `settings.json`, `keybindings.json`, `statusline-command.sh`, `CLAUDE.md`
+- Run `./claude/setup-symlinks.sh` to symlink everything to `~/.claude/`
+
 ## .zsrhc  Warnings
 `.zshrc` `vi` bindings seem to cause an lot of issues so I am going to avoid using it.
 In particular whenever we hit escape to go into vi mode we have troubles exiting it and certain words in the cli are not editable.

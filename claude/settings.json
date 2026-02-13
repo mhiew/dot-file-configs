@@ -1,0 +1,15 @@
+{
+  "permissions": {
+    "additionalDirectories": [
+      "/Users/mhiew/Development/llm-learnings"
+    ],
+    "allowedTools": [
+      "Bash(mkdir *)"
+    ]
+  },
+  "model": "opus",
+  "statusLine": {
+    "type": "command",
+    "command": "bash /Users/mhiew/.claude/statusline-command.sh"
+  }
+}
