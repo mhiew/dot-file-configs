@@ -3,14 +3,26 @@
     "additionalDirectories": [
       "/Users/mhiew/Development/llm-learnings"
     ],
-    "allowedTools": [
-      "Bash(mkdir *)",
-      "Bash(chmod +x *)",
-      "Bash(bash skills/*)",
+    "allow": [
+      "Bash(bash /Users/mhiew/Development/llm-learnings/skills/*)",
+      "Bash(bash /Users/mhiew/.claude/skills/*)",
+      "Bash(pushd /Users/mhiew/.claude/skills/* && npx tsx *)",
+      "Bash(cd /Users/mhiew/.claude/skills/* && npx tsx *)",
+      "Bash(sq curl *)",
+      "Bash(snow sql -c large *)",
+      "Bash(mkdir -p /Users/mhiew/Development/llm-learnings/*)",
+      "Bash(chmod +x /Users/mhiew/Development/llm-learnings/*)",
+      "Bash(ls /Users/mhiew/.claude/skills/*)",
+      "Bash(ls /Users/mhiew/Development/llm-learnings/*)",
+      "Bash(echo $*)",
+      "Bash(node --version*)",
+      "Bash(source ~/.zshrc)",
+      "Bash([ -n \"$BUGSNAG_AUTH_TOKEN\" ])",
       "Bash(git status*)",
       "Bash(git diff*)",
       "Bash(git log*)",
-      "WebSearch"
+      "WebSearch",
+      "mcp__bugsnag__investigate_error_by_url"
     ]
   },
   "model": "opus",

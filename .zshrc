@@ -90,7 +90,9 @@ alias gittrace="GIT_TRACE=1 GIT_TRACE_PERFORMANCE=1 git"
 
 # Shell integrations
 eval "$(fzf --zsh)"
-eval "$(zoxide init --cmd cd zsh)"
+if [[ -o interactive ]]; then
+  eval "$(zoxide init --cmd cd zsh)"
+fi
 
 #fzf configs
 # Setting fd as the default source for fzf
