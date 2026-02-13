@@ -15,6 +15,10 @@ autoload -Uz edit-command-line
 zle -N edit-command-line
 bindkey '^v' edit-command-line
 
+## unbind ctrl-g (default: send-break which clears current input)
+## ctrl-c already provides the same behavior, so this avoids accidental clears
+bindkey -r '^g'
+
 ## zsh changes for history
 # increase history size
 HISTFILE=~/.zsh_history
