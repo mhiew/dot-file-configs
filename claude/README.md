@@ -47,3 +47,13 @@ The status line is enabled in `settings.json`:
 
 - `jq` — for parsing JSON input from Claude Code
 - `git` — for branch and status information
+
+## Keybindings
+
+Custom keybindings are defined in `keybindings.json`.
+
+| Keybind | Action | Default | Notes |
+|---------|--------|---------|-------|
+| `shift+enter` | Newline | `shift+enter` | — |
+| `ctrl+v` | Open external editor | `ctrl+g` | Swapped to match shell `ctrl+v` edit-command shortcut |
+| `ctrl+g` | Paste image | `ctrl+v` | Moved here from `ctrl+v` to accommodate the editor swap |

@@ -3,7 +3,9 @@
     {
       "context": "Chat",
       "bindings": {
-        "shift+enter": "chat:newline"
+        "shift+enter": "chat:newline",
+        "ctrl+v": "chat:externalEditor",
+        "ctrl+g": "chat:imagePaste"
       }
     }
   ]
