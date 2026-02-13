@@ -10,9 +10,7 @@
       "Bash(git status*)",
       "Bash(git diff*)",
       "Bash(git log*)",
-      "WebSearch",
-      "mcp__bugsnag__investigate_error_by_url",
-      "Bash([ -n \"$BUGSNAG_AUTH_TOKEN\" ])"
+      "WebSearch"
     ]
   },
   "model": "opus",
