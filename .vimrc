@@ -187,6 +187,9 @@ nnoremap <leader>d "_d
 " Set syntax highlighting for fastlane files
 au BufNewFile,BufRead Fastfile set filetype=ruby
 
+" enable glow pager for markdown
+nnoremap <leader>g :!glow -p %<CR>
+
 " ========================================
 
 " Easy Motion Configs

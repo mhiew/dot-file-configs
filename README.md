@@ -10,6 +10,7 @@ A place to drop some tools preferences and configurations for ease of sharing be
 - brew install tmux
 - brew install tpm
 - brew install bat
+- brew install glow
 
 ## initial setup
 - source the `.zshrc` ie. `source $HOME/Developer/Program-Tool-Configurations/.zshrc`
