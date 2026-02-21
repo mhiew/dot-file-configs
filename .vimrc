@@ -188,7 +188,7 @@ nnoremap <leader>d "_d
 au BufNewFile,BufRead Fastfile set filetype=ruby
 
 " enable glow pager for markdown
-nnoremap <leader>g :!glow -p %<CR>
+nnoremap <leader>g :!glow -s dracula -p %<CR>
 
 " ========================================
 
