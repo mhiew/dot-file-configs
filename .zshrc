@@ -88,6 +88,44 @@ alias gitfstatus="git status -uno"
 # ability to see git trace information
 alias gittrace="GIT_TRACE=1 GIT_TRACE_PERFORMANCE=1 git"
 
+### Shell Prompt Configuration
+# Enable function execution inside the prompt
+setopt PROMPT_SUBST
+
+parse_git_branch() {
+    # Get current branch name
+    local branch=$(git rev-parse --abbrev-ref HEAD 2>/dev/null)
+    
+    if [[ -n "$branch" ]]; then
+        local git_status=$(git status --porcelain 2>/dev/null)
+        local indicators=""
+
+        # STAGED (+): Dracula Green (#50fa7b)
+        # Matches any change in the first column of porcelain output
+        if echo "$git_status" | grep -q "^[MADRC]"; then
+            indicators+="%F{#50fa7b}+%f"
+        fi
+
+        # UNSTAGED or UNTRACKED (*): Dracula Red (#ff5555)
+        # Matches any change in second column OR new files (??)
+        if echo "$git_status" | grep -qE "^.[MADRC]|^\?\?"; then
+            indicators+="%F{#ff5555}*%f"
+        fi
+
+        # Returns: [branch]+* (with Cyan branch name #8be9fd)
+        echo " %F{#8be9fd}[${branch}]%f${indicators}"
+    fi
+}
+
+# Dracula Palette: Purple (#bd93f9) for dir, White (#f8f8f2) for $
+# PROMPT BREAKDOWN:
+# [%*]       -> [HH:MM:SS] in Dracula Comment (Grey/Purple)
+# %1~        -> Current directory name only in Dracula Purple
+# $(...)     -> Your Git function
+# $          -> Literal dollar sign in Dracula White
+PROMPT='%F{#6272a4}[%*]%f %F{#bd93f9}%1~%f$(parse_git_branch) %F{#f8f8f2}$%f '
+
+
 # Shell integrations
 eval "$(fzf --zsh)"
 if [[ -o interactive ]]; then
