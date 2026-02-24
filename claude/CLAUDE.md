@@ -11,5 +11,10 @@
 - Use `// ADD THIS`, `// CHANGED`, `// REMOVE` markers in plan snippets to highlight what's changing
 - Never include plan markers in actual implemented code — committed code should be production-ready
 
+## Git & GitHub
+- Wrap commit message bodies at sentence boundaries, not at 72 characters
+- Propose commit messages for approval before committing
+- Keep commits self-contained: separate infrastructure from implementation logic
+
 ## Android Debugging
 - Debug logs: `android.util.Log.d("&&MIN", msg)` — fully qualified to avoid import changes for easy cleanup
