@@ -39,6 +39,19 @@
       "/Users/mhiew/Development/llm-learnings"
     ]
   },
+  "hooks": {
+    "Notification": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "tmux set-window-option -t $TMUX_PANE @claude_done 1 2>/dev/null"
+          }
+        ]
+      }
+    ]
+  },
   "model": "opus",
   "statusLine": {
     "type": "command",
