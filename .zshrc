@@ -110,20 +110,28 @@ setopt PROMPT_SUBST
 parse_git_branch() {
     # Get current branch name
     local branch=$(git rev-parse --abbrev-ref HEAD 2>/dev/null)
-    
+
     if [[ -n "$branch" ]]; then
-        local git_status=$(git status --porcelain 2>/dev/null)
         local indicators=""
 
+        # NOTE: We avoid `git status --porcelain` here because it does a full
+        # working tree scan (including recursive untracked file enumeration).
+        # In large repos like android-register (25k+ LFS files), that adds
+        # noticeable delay to every prompt render. Instead we use targeted
+        # git commands that each do the minimum work needed.
+
         # STAGED (+): Dracula Green (#50fa7b)
-        # Matches any change in the first column of porcelain output
-        if echo "$git_status" | grep -q "^[MADRC]"; then
+        # git diff --cached --quiet only checks the index, no working tree scan
+        if ! git diff --cached --quiet 2>/dev/null; then
             indicators+="%F{#50fa7b}+%f"
         fi
 
-        # UNSTAGED or UNTRACKED (*): Dracula Red (#ff5555)
-        # Matches any change in second column OR new files (??)
-        if echo "$git_status" | grep -qE "^.[MADRC]|^\?\?"; then
+        # UNSTAGED (*): Dracula Red (#ff5555)
+        # git diff --quiet only checks tracked files (no untracked scan)
+        # Untracked file detection is omitted — any command that enumerates
+        # untracked files (git status, git ls-files --others) is too slow
+        # in large repos like android-register (25k+ files)
+        if ! git diff --quiet 2>/dev/null; then
             indicators+="%F{#ff5555}*%f"
         fi
 
