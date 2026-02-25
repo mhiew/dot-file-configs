@@ -56,6 +56,7 @@ alias gw="./gradlew"
 alias gwp="./gradlew -p" #allows autocompletion
 
 # reloads our shell with latest zshrc changes
+
 alias mshell="source ~/.zshrc"
 
 #use vim keybindings for shell commands
@@ -65,6 +66,20 @@ alias mshell="source ~/.zshrc"
 alias ls='ls --color'
 
 alias c='clear; tmux clear-history'
+
+# Run any command, monitor it, and copy output ONLY on failure
+function copyFail() {
+  local tmpfile=$(mktemp)
+  # Run the command, redirecting stderr to stdout, then tee to temp file
+  "$@" 2>&1 | tee "$tmpfile"
+  
+  # Check if the command (the first part of the pipe) failed
+  if [[ ${pipestatus[1]} -ne 0 ]]; then
+    cat "$tmpfile" | pbcopy
+    echo "\n[!] Command failed. Output copied to clipboard."
+  fi
+  rm "$tmpfile"
+}
 
 # git helpers (requires fzf)
 #fuzzy search over branches
