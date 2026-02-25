@@ -131,8 +131,21 @@ rebase-onto() {
   git fetch origin "$1":"$1" && git rebase -i "$1"
 }
 rebase-gm() { rebase-onto green-master; }
-# update local master and green-master refs without checking them out
-alias git-sync-masters="git fetch origin master:master green-master:green-master"
+# update local master and green-master refs
+# pulls the current branch if on master/green-master, fetches the rest
+git_sync_masters() {
+  local current=$(git rev-parse --abbrev-ref HEAD)
+  local -a branches=()
+  for b in master green-master; do
+    if [[ "$current" == "$b" ]]; then
+      git pull
+    else
+      branches+=("$b:$b")
+    fi
+  done
+  (( ${#branches} )) && git fetch origin "${branches[@]}"
+}
+alias git-sync-masters="git_sync_masters"
 
 # faster git status but does not view untracked files
 alias gitfstatus="git status -uno"
