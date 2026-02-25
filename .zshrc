@@ -131,6 +131,8 @@ rebase-onto() {
   git fetch origin "$1":"$1" && git rebase -i "$1"
 }
 rebase-gm() { rebase-onto green-master; }
+# update local master and green-master refs without checking them out
+alias git-sync-masters="git fetch origin master:master green-master:green-master"
 
 # faster git status but does not view untracked files
 alias gitfstatus="git status -uno"
