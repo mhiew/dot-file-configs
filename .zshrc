@@ -109,10 +109,12 @@ ctrl-d/ctrl-u: scroll preview" \
 function gitamend {
     if [ -z "$1" ]; then
         git commit --amend --no-edit;
-    else 
+    else
         git commit --amend -m "$@";
     fi;
 }
+# open editor to amend full commit message (subject + body)
+alias gitamend-edit="git commit --amend"
 alias lg="git log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(auto)%d%C(reset)' --simplify-by-decoration"
 alias lg1="git log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(auto)%d%C(reset)%n''          %C(white)%s%C(reset) %C(dim white)- %an%C(reset)' --simplify-by-decoration"
 
