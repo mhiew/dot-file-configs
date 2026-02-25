@@ -101,7 +101,7 @@ alias lg1="git log --graph --abbrev-commit --decorate --format=format:'%C(bold b
 alias gitfstatus="git status -uno"
 
 # ability to see git trace information
-alias gittrace="GIT_TRACE=1 GIT_TRACE_PERFORMANCE=1 git"
+alias gittrace="GIT_TRACE=1 GIT_TRACE_PERFORMANCE=1 GIT_LFS_FORCE_PROGRESS=1"
 
 ### Shell Prompt Configuration
 # Enable function execution inside the prompt
