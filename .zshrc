@@ -115,6 +115,12 @@ function gitamend {
 }
 # open editor to amend full commit message (subject + body)
 alias gitamend-edit="git commit --amend"
+# reset working tree to last commit (tracked + untracked)
+git-clear() {
+  echo "This will discard ALL changes (tracked and untracked). Continue? [y/N]"
+  read -r response
+  [[ "$response" =~ ^[Yy]$ ]] && git reset --hard HEAD && git clean -fd
+}
 alias lg="git log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(auto)%d%C(reset)' --simplify-by-decoration"
 alias lg1="git log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(auto)%d%C(reset)%n''          %C(white)%s%C(reset) %C(dim white)- %an%C(reset)' --simplify-by-decoration"
 
