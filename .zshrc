@@ -56,8 +56,9 @@ alias gw="./gradlew"
 alias gwp="./gradlew -p" #allows autocompletion
 
 # reloads our shell with latest zshrc changes
-
 alias mshell="source ~/.zshrc"
+# reloads zshrc across all tmux panes and sessions
+alias mshellall='tmux list-panes -a -F "#{session_name}:#{window_index}.#{pane_index}" | xargs -I PANE tmux send-keys -t PANE "source ~/.zshrc" Enter'
 
 #use vim keybindings for shell commands
 #set -o vi
