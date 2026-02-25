@@ -87,9 +87,23 @@ function copyFail() {
 alias fsb='${DIR}/scripts/fsb.sh'
 #fuzzy search over commits
 alias fsc='${DIR}/scripts/fsc.sh'
+
 # interactively unstage files (multi-select with Tab)
 unstage() {
-  git diff --cached --name-only | fzf -m --preview 'git diff --cached -- {}' | xargs git reset HEAD --
+  local root=$(git rev-parse --show-toplevel)
+  local files=$(git diff --cached --name-only | fzf-tmux -p 90%,80% --reverse -m --ansi \
+    --header "tab: select | enter: unstage | q: abort
+ctrl-d/ctrl-u: scroll preview" \
+    --bind "q:abort,ctrl-d:preview-page-down,ctrl-u:preview-page-up" \
+    --preview "cd $root && git diff --cached --color=always -- {}" \
+    --preview-window=right:60%)
+  [[ -n "$files" ]] && echo "$files" | while read -r f; do
+    if git cat-file -e HEAD:"$f" 2>/dev/null; then
+      git -C "$root" reset HEAD -- "$f"
+    else
+      git -C "$root" rm --cached -- "$f"
+    fi
+  done
 }
 
 function gitamend {
