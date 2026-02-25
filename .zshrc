@@ -87,6 +87,10 @@ function copyFail() {
 alias fsb='${DIR}/scripts/fsb.sh'
 #fuzzy search over commits
 alias fsc='${DIR}/scripts/fsc.sh'
+# interactively unstage files (multi-select with Tab)
+unstage() {
+  git diff --cached --name-only | fzf -m --preview 'git diff --cached -- {}' | xargs git reset HEAD --
+}
 
 function gitamend {
     if [ -z "$1" ]; then
