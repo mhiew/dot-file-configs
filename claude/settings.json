@@ -39,6 +39,30 @@
       "/Users/mhiew/Development/llm-learnings"
     ]
   },
+  "hooks": {
+    "UserPromptSubmit": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "tmux set-window-option -t $TMUX_PANE @claude_thinking 1 2>/dev/null; tmux set-window-option -t $TMUX_PANE @claude_done 0 2>/dev/null"
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "tmux set-window-option -t $TMUX_PANE @claude_done 1 2>/dev/null; tmux set-window-option -t $TMUX_PANE @claude_thinking 0 2>/dev/null"
+          }
+        ]
+      }
+    ]
+  },
   "model": "opus",
   "statusLine": {
     "type": "command",
