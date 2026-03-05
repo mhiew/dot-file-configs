@@ -152,3 +152,4 @@ export FZF_ALT_C_OPTS="
   --walker-skip .git,node_modules,target
   --preview 'tree -C {}'"
 
+alias fman="compgen -c | fzf | xargs man"
