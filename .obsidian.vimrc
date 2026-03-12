@@ -1,3 +1,6 @@
+" allow yank to copy to osx clipboard
+set clipboard=unnamed
+
 " -- Movement --
 map j gj
 nmap k gk
