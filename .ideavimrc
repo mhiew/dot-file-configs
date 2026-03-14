@@ -50,7 +50,12 @@ set noerrorbells
 "map <leader>k <Plug>(easymotion-bd-jk)
 
 " used after searching to jump to specific result
+
 "map <leader>n <Plug>(easymotion-bd-n)
+
+" shortcut to rebuild the app
+nnoremap <leader>r :action CompileProject<CR>:action Run<CR>
+"nnoremap <leader>r <Action>(Rerun)
 
 " shortcut for SelectProjectInView
 map <leader>b <Action>(SelectInProjectView)
