@@ -190,6 +190,10 @@ au BufNewFile,BufRead Fastfile set filetype=ruby
 " enable glow pager for markdown
 nnoremap <leader>g :!glow -s dracula -p %<CR>
 
+" Automatically set the terminal/tmux title to the current file name
+set title
+set titlestring=%{substitute(expand('%:p'),\ $HOME,\ '~',\ '')}
+
 " ========================================
 
 " Easy Motion Configs
