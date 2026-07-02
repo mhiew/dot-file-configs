@@ -3,7 +3,15 @@ A place to drop some tools preferences and configurations for ease of sharing be
 
 # Setup
 
-## Dependencies
+# OSX Rebind Capslock to Control
+- Settings > Keyboard > Keyboard Shortcuts > Modifier Keys 
+- Caps Lock Key to Control
+
+## iterm2
+- install from https://iterm2.com/downloads.html
+- import iterm-min-profile.json
+
+## Add Homebrew Dependencies
 - install homebrew
 - brew install fzf
 - brew install zoxide
@@ -11,10 +19,11 @@ A place to drop some tools preferences and configurations for ease of sharing be
 - brew install tpm
 - brew install bat
 - brew install glow
+- brew install lnav
 
 ## initial setup
 - source the `.zshrc` ie. `source $HOME/Developer/Program-Tool-Configurations/.zshrc`
-- source the `.vimrc` ie. `source /Users/minhiew/Developer/Program-Tool-Configurations/.vimrc`. 
+- source the `.vimrc` ie. `source $HOME/Developer/Program-Tool-Configurations/.vimrc`. 
     - note use absolute path for `.vimrc` otherwise `.ideavimrc` wont be able to locate it as it doesn't understand path expansion
     - run `:PlugInstall` to get all the plugins we need
 - source the `.ideavimrc` ie. `source $HOME/Developer/Program-Tool-Configurations/.ideavimrc`
@@ -32,15 +41,19 @@ A place to drop some tools preferences and configurations for ease of sharing be
     - RelativeLineNumbers which we can configure to show both relative and absolute line numbers at the same time [reference](https://stackoverflow.com/a/78374798)
 
 ## Better Touch Tool
-- TODO
+- install and add license
+- import Default.bttpreset
+
+### Usage
+- cmd + 
 
 ## NerdFont
 - brew tap homebrew/cask
 - brew install --cask font-jetbrains-mono-nerd-font
 - update iterm2 Settings > Profile > Text > Font
 
-## iterm2
-- TODO
+## Lnav
+- https://docs.lnav.org/en/v0.12.3/intro.html
 
 ## Git 
 - use `git config --global --add --bool rebase.updateRefs true` [reference](https://andrewlock.net/working-with-stacked-branches-in-git-is-easier-with-update-refs/)
@@ -57,3 +70,5 @@ So do not use:
 ```
 set -o vi
 ```
+
+
