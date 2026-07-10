@@ -178,6 +178,7 @@ Legend: `<C-x>` = Ctrl+x, `<M-x>` = Alt/Option+x (aka "Meta" — this is fzf's d
 | `c` | Clear screen + tmux scroll history |
 | `gw` / `gwp` | `./gradlew` / `./gradlew -p` |
 | `fman` | Fuzzy-search man pages |
+| `fts` | Fuzzy-search tmux sessions — enter to attach/switch, `<C-x>` to kill, or pick "New session" to create one. Starts a new session directly if none exist |
 
 ## .zsrhc  Warnings
 `.zshrc` `vi` bindings seem to cause an lot of issues so I am going to avoid using it.

@@ -87,6 +87,8 @@ function copyFail() {
 alias fsb='${DIR}/scripts/fsb.sh'
 #fuzzy search over commits
 alias fsc='${DIR}/scripts/fsc.sh'
+#fuzzy search over tmux sessions - attach, kill, or create new
+alias fts='${DIR}/scripts/fts.sh'
 
 # interactively unstage files (multi-select with Tab)
 unstage() {
