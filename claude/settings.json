@@ -46,7 +46,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "tmux set-window-option -t $TMUX_PANE @claude_thinking 1 2>/dev/null; tmux set-window-option -t $TMUX_PANE @claude_done 0 2>/dev/null"
+            "command": "tmux set-window-option -t $TMUX_PANE @claude_thinking 1 2>/dev/null; tmux set-window-option -t $TMUX_PANE @claude_done 0 2>/dev/null; tmux set-window-option -t $TMUX_PANE @claude_needs_action 0 2>/dev/null"
           }
         ]
       }
@@ -57,7 +57,18 @@
         "hooks": [
           {
             "type": "command",
-            "command": "tmux set-window-option -t $TMUX_PANE @claude_done 1 2>/dev/null; tmux set-window-option -t $TMUX_PANE @claude_thinking 0 2>/dev/null"
+            "command": "tmux set-window-option -t $TMUX_PANE @claude_done 1 2>/dev/null; tmux set-window-option -t $TMUX_PANE @claude_thinking 0 2>/dev/null; tmux set-window-option -t $TMUX_PANE @claude_needs_action 0 2>/dev/null"
+          }
+        ]
+      }
+    ],
+    "Notification": [
+      {
+        "matcher": "permission_prompt",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "tmux set-window-option -t $TMUX_PANE @claude_needs_action 1 2>/dev/null; tmux set-window-option -t $TMUX_PANE @claude_thinking 0 2>/dev/null"
           }
         ]
       }
