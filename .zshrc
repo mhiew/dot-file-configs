@@ -94,6 +94,7 @@ alias fts='${DIR}/scripts/fts.sh'
 unstage() {
   local root=$(git rev-parse --show-toplevel)
   local files=$(git diff --cached --name-only | fzf-tmux -p 90%,80% --reverse -m --ansi \
+    --border-label " unstage files " --border-label-pos 3 \
     --header "tab: select | enter: unstage | q: abort
 ctrl-d/ctrl-u: scroll preview" \
     --bind "q:abort,ctrl-d:preview-page-down,ctrl-u:preview-page-up" \

@@ -6,7 +6,9 @@
 function fsc() {
   git log --graph --color=always \
       --format="%C(auto)%h%d %s %C(black)%C(bold)%cr" "$@" |
-  fzf --ansi --no-sort --reverse --tiebreak=index --bind=ctrl-s:toggle-sort --preview \
+  fzf --ansi --no-sort --reverse --tiebreak=index --bind=ctrl-s:toggle-sort \
+      --border --border-label " git commits " --border-label-pos 3 \
+      --preview \
          'f() { set -- $(echo -- "$@" | grep -o "[a-f0-9]\{7\}"); [ $# -eq 0 ] || git show --color=always $1 ; }; f {}' \
       --header "enter to view, ctrl-o to checkout, ctrl-d preview down, ctrl-u preview up" \
       --bind "q:abort,ctrl-d:preview-page-down,ctrl-u:preview-page-up" \
