@@ -193,6 +193,12 @@ parse_git_branch() {
     fi
 }
 
+# Returns insertion and deletion stats for this branch + unstaged files vs HEAD
+gitchangestats() {
+    git diff --numstat HEAD~1 "$@" | awk '{add+=$1; del+=$2} END {printf "Insertions: %d, Deletions: %d, Total: %d\n", add, del, add+del}'
+    git diff --numstat HEAD~1 "$@" | awk '{add+=$1; del+=$2} END {print add - del}'
+}
+
 # Dracula Palette: Purple (#bd93f9) for dir, White (#f8f8f2) for $
 # PROMPT BREAKDOWN:
 # [%*]       -> [HH:MM:SS] in Dracula Comment (Grey/Purple)
